@@ -1,0 +1,154 @@
+---
+import Layout from "../../layouts/Layout.astro"
+
+const post = {
+	title: "Getting Started with Astro Nano",
+	date: "2024-03-15",
+	author: "Astro Team",
+	description:
+		"Learn how to build your personal website with Astro Nano, a minimalist template for creators and developers.",
+	content: `
+    Building a personal website shouldn't be complicated. Astro Nano provides a clean, 
+    minimalist foundation for showcasing your work, writing blog posts, and sharing your 
+    projects with the world.
+
+    ## Key Features
+
+    - **Blazing Fast**: Built with Astro's static site generation
+    - **Minimalist Design**: Focus on your content with clean typography
+    - **Markdown Support**: Write content in markdown with full MDX support
+    - **Project Showcase**: Beautiful project gallery with filtering
+    - **Blog Ready**: Start writing and sharing immediately
+
+    ## Getting Started
+
+    1. Clone the repository
+    2. Install dependencies
+    3. Customize your content
+    4. Deploy to your favorite platform
+
+    The philosophy behind Astro Nano is simplicity without sacrifice. You get all the 
+    modern web features you need, wrapped in a clean, maintainable package.
+  `,
+	tags: ["astro", "web development", "tutorial"],
+	readingTime: "5 min",
+}
+---
+
+<Layout>
+	<article class="blog-post">
+		<header class="post-header">
+			<h1>{post.title}</h1>
+			<div class="post-meta">
+				<time datetime={post.date}
+					>{
+						new Date(post.date).toLocaleDateString("en-US", {
+							year: "numeric",
+							month: "long",
+							day: "numeric",
+						})
+					}</time
+				>
+				<span class="reading-time">{post.readingTime} read</span>
+			</div>
+		</header>
+
+		<div class="post-content">
+			<div class="post-description">
+				<p>{post.description}</p>
+			</div>
+
+			<div class="post-body">
+				{
+					post.content
+						.split("\n\n")
+						.map((paragraph) => <p>{paragraph}</p>)
+				}
+			</div>
+
+			<footer class="post-footer">
+				<div class="tags">
+					{post.tags.map((tag) => <span class="tag">#{tag}</span>)}
+				</div>
+				<div class="author">
+					Written by {post.author}
+				</div>
+			</footer>
+		</div>
+	</article>
+</Layout>
+
+<style>
+	.blog-post {
+		max-width: 720px;
+		margin: 0 auto;
+		padding: 2rem 1rem;
+	}
+
+	.post-header {
+		margin-bottom: 3rem;
+	}
+
+	.post-header h1 {
+		font-size: 2.5rem;
+		font-weight: 700;
+		margin-bottom: 1rem;
+		line-height: 1.2;
+	}
+
+	.post-meta {
+		color: #666;
+		font-size: 0.9rem;
+		display: flex;
+		gap: 1rem;
+	}
+
+	.post-description {
+		font-size: 1.2rem;
+		line-height: 1.6;
+		color: #444;
+		margin-bottom: 2rem;
+		font-weight: 300;
+	}
+
+	.post-body {
+		font-size: 1.1rem;
+		line-height: 1.8;
+		margin-bottom: 3rem;
+	}
+
+	.post-body h2 {
+		font-size: 1.5rem;
+		font-weight: 600;
+		margin: 2rem 0 1rem;
+	}
+
+	.post-footer {
+		border-top: 1px solid #eee;
+		margin-top: 3rem;
+		padding-top: 2rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.tags {
+		display: flex;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+	}
+
+	.tag {
+		background: #f5f5f5;
+		padding: 0.3rem 0.8rem;
+		border-radius: 20px;
+		font-size: 0.9rem;
+		color: #666;
+	}
+
+	.author {
+		font-style: italic;
+		color: #666;
+	}
+</style>
+

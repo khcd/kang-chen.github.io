@@ -1,0 +1,113 @@
+---
+// src/pages/projects/[slug].astro
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  // This would typically come from a CMS or data source
+  const projects = [
+    {
+      title: "Project One",
+      year: 2024,
+      image: "https://picsum.photos/id/1/800/600",
+      slug: "project-one",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris."
+    },
+    {
+      title: "Project Two",
+      year: 2024,
+      image: "https://picsum.photos/id/2/800/600",
+      slug: "project-two",
+      description: "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae."
+    },
+    {
+      title: "Project Three",
+      year: 2023,
+      image: "https://picsum.photos/id/3/800/600",
+      slug: "project-three",
+      description: "Suspendisse potenti. Cras in purus eu magna vulputate luctus."
+    },
+    {
+      title: "Project Four",
+      year: 2023,
+      image: "https://picsum.photos/id/4/800/600",
+      slug: "project-four",
+      description: "Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam."
+    },
+    {
+      title: "Project Five",
+      year: 2022,
+      image: "https://picsum.photos/id/5/800/600",
+      slug: "project-five",
+      description: "Vestibulum ac est lacinia nisi venenatis tristique."
+    },
+    {
+      title: "Project Six",
+      year: 2022,
+      image: "https://picsum.photos/id/6/800/600",
+      slug: "project-six",
+      description: "Fusce convallis metus id felis luctus adipiscing."
+    },
+    {
+      title: "Project Seven",
+      year: 2022,
+      image: "https://picsum.photos/id/7/800/600",
+      slug: "project-seven",
+      description: "Maecenas tristique, est et tempus semper, est quam pharetra magna."
+    },
+    {
+      title: "Project Eight",
+      year: 2022,
+      image: "https://picsum.photos/id/8/800/600",
+      slug: "project-eight",
+      description: "Donec dapibus. Duis at velit eu est congue elementum."
+    }
+  ];
+
+  return projects.map(project => {
+    return {
+      params: { slug: project.slug },
+      props: { project }
+    };
+  });
+}
+
+const { project } = Astro.props;
+---
+
+<Layout>
+  <div class="project-detail">
+    <img src={project.image} alt={project.title} />
+    <h1>{project.title}</h1>
+    <p class="project-year">{project.year}</p>
+    <div class="project-description">
+      <p>{project.description}</p>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .project-detail {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .project-detail img {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .project-detail h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .project-year {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-description {
+    line-height: 1.8;
+  }
+</style>

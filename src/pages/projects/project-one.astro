@@ -1,0 +1,139 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const project = {
+  title: "Project One",
+  year: 2024,
+  description: "A series of digital artworks exploring the intersection of technology and human perception. This project investigates how digital interfaces shape our understanding of reality and consciousness.",
+  images: [
+    {
+      url: "https://picsum.photos/id/1/800/600",
+      caption: "Main view of the installation"
+    },
+    {
+      url: "https://picsum.photos/id/2/800/600",
+      caption: "Detail view showing the interactive elements"
+    },
+    {
+      url: "https://picsum.photos/id/3/800/600",
+      caption: "Audience interaction during the exhibition"
+    }
+  ],
+  details: {
+    medium: "Digital Installation",
+    dimensions: "Variable",
+    duration: "30 minutes",
+    location: "Digital Space Gallery, New York"
+  }
+};
+---
+
+<Layout>
+  <article class="project-page">
+    <header class="project-header">
+      <h1>{project.title}</h1>
+      <p class="year">{project.year}</p>
+    </header>
+
+    <div class="project-content">
+      <div class="project-description">
+        <p>{project.description}</p>
+      </div>
+
+      <div class="project-images">
+        {project.images.map(image => (
+          <figure>
+            <img src={image.url} alt={image.caption} />
+            <figcaption>{image.caption}</figcaption>
+          </figure>
+        ))}
+      </div>
+
+      <div class="project-details">
+        <h2>Details</h2>
+        <dl>
+          {Object.entries(project.details).map(([key, value]) => (
+            <>
+              <dt>{key}</dt>
+              <dd>{value}</dd>
+            </>
+          ))}
+        </dl>
+      </div>
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .project-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 0;
+  }
+
+  .project-header {
+    margin-bottom: 3rem;
+  }
+
+  .project-header h1 {
+    font-size: 2rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  .year {
+    color: #666;
+    font-size: 1rem;
+  }
+
+  .project-description {
+    margin-bottom: 4rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+
+  .project-images {
+    margin-bottom: 4rem;
+  }
+
+  .project-images figure {
+    margin-bottom: 2rem;
+  }
+
+  .project-images img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 1rem;
+  }
+
+  .project-images figcaption {
+    color: #666;
+    font-size: 0.9rem;
+  }
+
+  .project-details {
+    border-top: 1px solid #eee;
+    padding-top: 2rem;
+  }
+
+  .project-details h2 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-details dl {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 1rem;
+  }
+
+  .project-details dt {
+    color: #666;
+    text-transform: capitalize;
+  }
+
+  .project-details dd {
+    margin: 0;
+  }
+</style> 

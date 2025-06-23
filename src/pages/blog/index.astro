@@ -1,0 +1,171 @@
+---
+import Layout from "../../layouts/Layout.astro"
+
+const posts = [
+	{
+		title: "Dot Your I's and Cross Your T's",
+		description:
+			"A reflection on thoroughness and confronting difficult situations",
+		slug: "2024-12-30-dot-your-is",
+		date: "2024-12-30",
+		year: 2024,
+	},
+	{
+		title: "Jung on the Puer Aeternus",
+		description:
+			"An exploration of the Puer aeternus complex in modern society",
+		slug: "2025-03-26-puer",
+		date: "2025-03-26",
+		year: 2025,
+	},
+	{
+		title: "Tools and Platforms are an Arbitrage",
+		description:
+			"An analysis of how tools and platforms create arbitrage opportunities in creative industries",
+		slug: "2024-01-29-tools-as-arbitrage",
+		date: "2024-01-29",
+		year: 2024,
+	},
+	{
+		title: "Psychology of the Independent Creator",
+		description:
+			"Exploring how ideologies shape identity and the importance of maintaining youthful ideals in creative work",
+		slug: "2023-07-25-psych-of-independent-creator",
+		date: "2023-07-25",
+		year: 2023,
+	},
+	{
+		title: "The Power of Youthful Ideologies",
+		description:
+			"A reflection on how maintaining youthful ideals can shape our identity and creative journey",
+		slug: "2023-06-28-youthful-ideologies",
+		date: "2023-06-28",
+		year: 2023,
+	},
+]
+
+// Group posts by year
+const postsByYear = posts.reduce((acc, post) => {
+	;(acc[post.year] = acc[post.year] || []).push(post)
+	return acc
+}, {})
+
+// Sort years in descending order
+const years = Object.keys(postsByYear).sort((a, b) => b - a)
+---
+
+<Layout>
+	<div class="blog-index">
+		<h1>Blog</h1>
+		<p class="blog-info">
+			These are a collection of my personal notes dated back a couple of
+			years. A disclaimer on these notes is they have been in no way
+			edited by AI. I seek to preserve a rawer form of communication even
+			if it contains structural mishaps.
+		</p>
+
+		{
+			years.map((year) => (
+				<section class="year-section">
+					<h2>{year}</h2>
+					<div class="posts-list">
+						{postsByYear[year].map((post) => (
+							<a href={`/blog/${post.slug}`} class="post-link">
+								<article class="post-card">
+									<h3>{post.title}</h3>
+									<p class="description">
+										{post.description}
+									</p>
+									<time datetime={post.date}>
+										{new Date(post.date).toLocaleDateString(
+											"en-US",
+											{
+												month: "long",
+												day: "numeric",
+											}
+										)}
+									</time>
+								</article>
+							</a>
+						))}
+					</div>
+				</section>
+			))
+		}
+	</div>
+</Layout>
+
+<style>
+	.blog-index {
+		max-width: 800px;
+		margin: 0 auto;
+		padding: 2rem 1rem;
+	}
+
+	h1 {
+		font-size: 2rem;
+		font-weight: 500;
+		margin-bottom: 1rem;
+		color: var(--text-color);
+	}
+
+	.blog-info {
+		font-size: 1.1rem;
+		color: var(--secondary-text, #666);
+		margin-bottom: 3rem;
+		line-height: 1.5;
+	}
+
+	.year-section {
+		margin-bottom: 4rem;
+	}
+
+	.year-section h2 {
+		font-size: 1.5rem;
+		font-weight: 500;
+		margin-bottom: 1.5rem;
+		color: var(--text-color);
+	}
+
+	.posts-list {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.post-link {
+		text-decoration: none;
+		color: var(--text-color);
+	}
+
+	.post-card {
+		padding: 1.5rem;
+		border-radius: 8px;
+		background-color: var(--background-color);
+		border: 1px solid var(--border-color, transparent);
+	}
+
+	.post-card:hover {
+		background-color: var(--card-hover, #f5f5f5);
+	}
+
+	.post-card h3 {
+		font-size: 1.25rem;
+		font-weight: 500;
+		margin: 0;
+		margin-bottom: 0.5rem;
+		color: var(--text-color);
+	}
+
+	.description {
+		font-size: 1rem;
+		color: var(--secondary-text, #666);
+		margin: 0;
+		margin-bottom: 0.5rem;
+	}
+
+	time {
+		font-size: 0.875rem;
+		color: var(--secondary-text, #888);
+	}
+</style>

@@ -1,0 +1,47 @@
+---
+interface Props {
+	title: string
+	date: string
+	content: string
+}
+
+const { title, date, content } = Astro.props
+---
+
+<article>
+	<h1>{title}</h1>
+	<time datetime={date}>{date}</time>
+	<div class="content">
+		{
+			content
+				.split("\n\n")
+				.map((paragraph) => <p set:html={paragraph.trim()} />)
+		}
+	</div>
+</article>
+
+<style>
+	article {
+		margin: 2rem auto;
+		max-width: 800px;
+		padding: 0 1rem;
+	}
+	time {
+		color: #666;
+		display: block;
+		margin: 1rem 0;
+	}
+	.content {
+		line-height: 1.6;
+		font-size: 1.1rem;
+	}
+	.content p {
+		margin-bottom: 1.5rem;
+		white-space: pre-line;
+	}
+	h1 {
+		font-size: 2.5rem;
+		margin-bottom: 1rem;
+		line-height: 1.2;
+	}
+</style>

@@ -1,0 +1,116 @@
+---
+// src/layouts/Layout.astro
+import { ViewTransitions } from "astro:transitions"
+---
+
+<!doctype html>
+<html lang="en" data-theme="light">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Kang Chen</title>
+		<link rel="stylesheet" href="/styles/global.css" />
+		<link
+			rel="alternate"
+			type="application/rss+xml"
+			title="RSS Feed"
+			href="/rss.xml"
+		/>
+		<ViewTransitions />
+	</head>
+	<body>
+		<div class="layout-wrapper">
+			<header>
+				<div class="container">
+					<h1>Kang Chen</h1>
+					<nav>
+						<ul>
+							<li><a href="/artwork">Artwork</a></li>
+							<li><a href="/exhibits">Exhibits</a></li>
+							<li><a href="/info">Info</a></li>
+							<li><a href="/links">Links</a></li>
+							<li><a href="/shop">Shop</a></li>
+							<li><a href="/blog">Blog</a></li>
+						</ul>
+					</nav>
+					<div class="theme-toggle-wrapper">
+						<button
+							class="theme-toggle"
+							id="theme-toggle"
+							aria-label="Toggle dark mode"
+						>
+							<span class="toggle-text light-text"
+								>Light mode</span
+							>
+							<div class="toggle-track">
+								<div class="toggle-thumb"></div>
+							</div>
+							<span class="toggle-text dark-text">Dark mode</span>
+						</button>
+					</div>
+				</div>
+			</header>
+			<main>
+				<slot />
+			</main>
+		</div>
+
+		<script>
+			// Function to set theme
+			const setTheme = (theme) => {
+				document.documentElement.setAttribute("data-theme", theme)
+				localStorage.setItem("theme", theme)
+			}
+
+			// Initialize theme
+			const initializeTheme = () => {
+				const savedTheme =
+					localStorage.getItem("theme") ||
+					(window.matchMedia("(prefers-color-scheme: dark)").matches
+						? "dark"
+						: "light")
+				setTheme(savedTheme)
+			}
+
+			// Initialize theme on page load
+			initializeTheme()
+
+			// Handle theme toggle - improved implementation
+			const setupThemeToggle = () => {
+				const themeToggle = document.getElementById("theme-toggle")
+				if (!themeToggle) return
+
+				// Remove any existing event listeners to prevent duplicates
+				const newThemeToggle = themeToggle.cloneNode(true)
+				themeToggle.parentNode.replaceChild(newThemeToggle, themeToggle)
+
+				// Add the event listener to the new element
+				newThemeToggle.addEventListener("click", (e) => {
+					e.preventDefault()
+					const currentTheme =
+						document.documentElement.getAttribute("data-theme")
+					const newTheme = currentTheme === "dark" ? "light" : "dark"
+					setTheme(newTheme)
+				})
+			}
+
+			// Set up theme toggle on initial page load
+			setupThemeToggle()
+
+			// Listen for system theme changes
+			window
+				.matchMedia("(prefers-color-scheme: dark)")
+				.addEventListener("change", (e) => {
+					if (!localStorage.getItem("theme")) {
+						setTheme(e.matches ? "dark" : "light")
+					}
+				})
+
+			// Handle view transitions - reinitialize theme and setup toggle on page changes
+			document.addEventListener("astro:page-load", () => {
+				initializeTheme()
+				setupThemeToggle()
+			})
+		</script>
+	</body>
+</html>
