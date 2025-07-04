@@ -287,4 +287,29 @@ main {
 
 [data-theme="dark"] .author {
   color: #e0e0e0;
+}
+
+/* Markdown content styles */
+.content p {
+  margin: 1.5rem 0;
+  line-height: 1.7;
+  display: block;
+}
+.content h1, .content h2, .content h3, .content h4, .content h5, .content h6 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  line-height: 1.2;
+}
+.content ul, .content ol {
+  margin-left: 2rem;
+  margin-bottom: 1.5rem;
+}
+.content blockquote {
+  border-left: 4px solid #ccc;
+  margin: 1.5rem 0;
+  padding-left: 1rem;
+  color: #666;
+  font-style: italic;
+  background: #222;
 } 
