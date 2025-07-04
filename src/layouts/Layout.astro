@@ -9,6 +9,12 @@ import { ViewTransitions } from "astro:transitions"
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Kang Chen</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+			rel="stylesheet"
+		/>
 		<link rel="stylesheet" href="/styles/global.css" />
 		<link
 			rel="alternate"
@@ -22,15 +28,124 @@ import { ViewTransitions } from "astro:transitions"
 		<div class="layout-wrapper">
 			<header>
 				<div class="container">
-					<h1>Kang Chen</h1>
+					<h1>
+						<a href="/" class="logo">
+							<svg
+								class="logo-svg"
+								viewBox="0 0 60 60"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<!-- Shield background -->
+								<path
+									d="M30 5 L50 15 L50 45 L30 55 L10 45 L10 15 Z"
+									fill="currentColor"
+									opacity="0.1"></path>
+								<path
+									d="M30 5 L50 15 L50 45 L30 55 L10 45 L10 15 Z"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="1.5"></path>
+
+								<!-- Rabbit body -->
+								<ellipse
+									cx="30"
+									cy="35"
+									rx="8"
+									ry="12"
+									fill="currentColor"
+									opacity="0.8"></ellipse>
+
+								<!-- Rabbit head -->
+								<circle
+									cx="30"
+									cy="22"
+									r="6"
+									fill="currentColor"
+									opacity="0.8"></circle>
+
+								<!-- Rabbit ears -->
+								<ellipse
+									cx="26"
+									cy="12"
+									rx="2"
+									ry="8"
+									fill="currentColor"
+									opacity="0.8"
+									transform="rotate(-15 26 12)"></ellipse>
+								<ellipse
+									cx="34"
+									cy="12"
+									rx="2"
+									ry="8"
+									fill="currentColor"
+									opacity="0.8"
+									transform="rotate(15 34 12)"></ellipse>
+
+								<!-- Rabbit eyes -->
+								<circle
+									cx="28"
+									cy="20"
+									r="1"
+									fill="currentColor"></circle>
+								<circle
+									cx="32"
+									cy="20"
+									r="1"
+									fill="currentColor"></circle>
+
+								<!-- Rabbit nose -->
+								<circle
+									cx="30"
+									cy="24"
+									r="0.5"
+									fill="currentColor"></circle>
+
+								<!-- Rabbit whiskers -->
+								<line
+									x1="25"
+									y1="23"
+									x2="20"
+									y2="22"
+									stroke="currentColor"
+									stroke-width="0.5"></line>
+								<line
+									x1="25"
+									y1="25"
+									x2="20"
+									y2="25"
+									stroke="currentColor"
+									stroke-width="0.5"></line>
+								<line
+									x1="35"
+									y1="23"
+									x2="40"
+									y2="22"
+									stroke="currentColor"
+									stroke-width="0.5"></line>
+								<line
+									x1="35"
+									y1="25"
+									x2="40"
+									y2="25"
+									stroke="currentColor"
+									stroke-width="0.5"></line>
+
+								<!-- Rabbit tail -->
+								<circle
+									cx="38"
+									cy="38"
+									r="3"
+									fill="currentColor"
+									opacity="0.6"></circle>
+							</svg>
+						</a>
+					</h1>
 					<nav>
 						<ul>
-							<li><a href="/artwork">Artwork</a></li>
-							<li><a href="/exhibits">Exhibits</a></li>
-							<li><a href="/info">Info</a></li>
+							<li><a href="/projects">Projects</a></li>
+							<li><a href="/blog">Blog</a></li>
 							<li><a href="/links">Links</a></li>
 							<li><a href="/shop">Shop</a></li>
-							<li><a href="/blog">Blog</a></li>
 						</ul>
 					</nav>
 					<div class="theme-toggle-wrapper">
@@ -39,13 +154,41 @@ import { ViewTransitions } from "astro:transitions"
 							id="theme-toggle"
 							aria-label="Toggle dark mode"
 						>
-							<span class="toggle-text light-text"
-								>Light mode</span
+							<svg
+								class="toggle-text light-text"
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke-width="1.5"
+								stroke="currentColor"
+								width="20"
+								height="20"
 							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									d="M12 3v1.5m0 15V21m8.485-8.485h-1.5m-15 0H3m15.364-6.364l-1.06 1.06m-10.607 10.607l-1.06 1.06m12.727 0l-1.06-1.06m-10.607-10.607l-1.06-1.06M12 7.5A4.5 4.5 0 1012 16.5 4.5 4.5 0 0012 7.5z"
+								></path>
+							</svg>
 							<div class="toggle-track">
 								<div class="toggle-thumb"></div>
 							</div>
-							<span class="toggle-text dark-text">Dark mode</span>
+							<svg
+								class="toggle-text dark-text"
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke-width="1.5"
+								stroke="currentColor"
+								width="20"
+								height="20"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"
+								></path>
+							</svg>
 						</button>
 					</div>
 				</div>
