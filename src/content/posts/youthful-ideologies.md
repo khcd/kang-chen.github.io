@@ -4,7 +4,7 @@ date: "2023-06-28"
 description: "A reflection on how maintaining youthful ideals can shape our identity and creative journey"
 ---
 
-Ideologies form part of your identity, when you continually sacrifice and obscure these ideologies regardless of whether they are helpful for you to survive you chip away at your core identity, and that's where your unconscious and conscious mind clash. Especially if you take on an intellectual job that is against core ideologies.
+Ideologies form part of your identity, when you continually sacrifice and obscure these ideologies regardless of whether they are helpful for you to survive you chip away at your core identity, and that's where your unconscious and conscious mind clash. Especially if you take on a paid position job that goes against core ideologies.
 
 If you do perform actions, against your core ideologies you sacrifice something unknown you actually sacrifice power to accomplish more in the future.
 

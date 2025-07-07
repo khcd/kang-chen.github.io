@@ -79,10 +79,12 @@ const { title, date, content } = Astro.props
 		margin-bottom: 1.5rem;
 	}
 	.content img {
-		max-width: 100%;
+		max-width: min(1080px, 100%);
+		width: 100%;
 		height: auto;
 		display: block;
 		margin: 2rem auto;
+		object-fit: cover;
 	}
 	h1 {
 		font-size: 2.5rem;
