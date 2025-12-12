@@ -1,13 +1,10 @@
 ---
-import Layout from "../../layouts/Layout.astro"
-import BlogPost from "../../components/BlogPost.astro"
+title: "Dot Your I's and Cross Your T's"
+date: "2024-12-30"
+description: "A reflection on thoroughness and confronting difficult situations"
+---
 
-const post = {
-	title: "Dot Your I's and Cross Your T's",
-	date: "2024-12-30",
-	description:
-		"A reflection on thoroughness and confronting difficult situations",
-	content: `for as long as I can remember I've had pest problems in my attic ranging from rats, possums and other species to other things, there was always a dank musky smell emanating.
+for as long as I can remember I've had pest problems in my attic ranging from rats, possums and other species to other things, there was always a dank musky smell emanating.
 
 I inspected all areas of the attic initially and had treated the knee wall beams with an anti mould bleach
 
@@ -33,10 +30,4 @@ it wasn't the situation where we needed a tyvec suit but it was
 
 most people consider the dank corners of your mind or your attic no ones business. but in avoidance of said disgust.
 
-so if you're going to do something or attempt something do dot your i's and cross your t's and bother to dig into areas that may disgust you`,
-}
----
-
-<Layout>
-	<BlogPost {...post} />
-</Layout>
+so if you're going to do something or attempt something do dot your i's and cross your t's and bother to dig into areas that may disgust you

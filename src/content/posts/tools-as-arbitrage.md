@@ -29,7 +29,7 @@ It's why demand for <a href="https://en.wikipedia.org/wiki/COBOL" target="_blank
 
 To explain the phenomenon to the left of the curve, it's why the lead pencil are is still valued, they are on the far left primitive area of the spectrum that requires a large commitment of craftsmanship and time that can't be easily replicated, on the far right you have technology like AfterEffects, C4D, <a href="https://www.sidefx.com/" target="_blank">Houdini</a>, Octane and then custom renderers and other new media ai art on the other spectrum. Now with diffusion, it's <a href="https://github.com/comfyanonymous/ComfyUI" target="_blank">comfyUI</a> On the far right you have new media art which includes but is not limited to "AI".
 
-When the technology itself determines design patterns you get a groundswell of works that are very similar in vein, example specific algorithms
+When the technology itself determines design patterns you get a groundswell of works that are very similar in vein, look at particular applications like After Effects and the design language that it encapsulates. Artists who use After Effects have a certain
 
 The middle of the curve houses the most content, it's content which is somewhat safe. The type of content that is easily replicated, it has no visual "identity or design schema per se, it's neither good or bad. It just exists in the middle grounds of the content spectrum. When things exist in the middle ground of the content spectrum it's most like to be drowned out, which is why bad art is better than mediocre art because it inspires a reaction.
 
