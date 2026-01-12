@@ -16,7 +16,7 @@
 
 [data-theme="dark"] {
   --background-color: #1a1a1a;
-  --text-color: #ffffff;
+  --text-color: #edebe1;
   --header-bg: #2d2d2d;
   --nav-link-color: #f0f0f0;
   --nav-link-hover: #ffffff;
@@ -32,7 +32,11 @@ body {
   background-color: var(--background-color);
   color: var(--text-color);
   margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: "Open Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
   line-height: 1.6;
   min-height: 100vh;
   display: flex;
@@ -78,7 +82,7 @@ header {
 header .container {
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-end;
   gap: 2rem;
 }
 
@@ -86,6 +90,32 @@ h1 {
   font-size: 1.5rem;
   font-weight: 500;
   margin: 0;
+}
+
+h1 a {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+h1 a:hover {
+  color: var(--nav-link-hover);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logo-svg {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: 500;
 }
 
 nav ul {
@@ -243,7 +273,7 @@ main {
 }
 
 [data-theme="dark"] .year-section h2 {
-  color: #ffffff;
+  color: #d46060;
 }
 
 [data-theme="dark"] .tag {
@@ -257,4 +287,29 @@ main {
 
 [data-theme="dark"] .author {
   color: #e0e0e0;
+}
+
+/* Markdown content styles */
+.content p {
+  margin: 2.5rem 0;
+  line-height: 1.8;
+  display: block;
+}
+.content h1, .content h2, .content h3, .content h4, .content h5, .content h6 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  line-height: 1.2;
+}
+.content ul, .content ol {
+  margin-left: 2rem;
+  margin-bottom: 1.5rem;
+}
+.content blockquote {
+  border-left: 4px solid #ccc;
+  margin: 1.5rem 0;
+  padding-left: 1rem;
+  color: #666;
+  font-style: italic;
+  background: #222;
 } 

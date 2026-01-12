@@ -1,0 +1,15 @@
+---
+title: "The Power of Youthful Ideologies"
+date: "2023-06-28"
+description: "A reflection on how maintaining youthful ideals can shape our identity and creative journey"
+---
+
+Ideologies form part of your identity, when you continually sacrifice and obscure these ideologies regardless of whether they are helpful for you to survive you chip away at your core identity, and that's where your unconscious and conscious mind clash. Especially if you take on a paid position job that goes against core ideologies.
+
+If you do perform actions, against your core ideologies you sacrifice something unknown you actually sacrifice power to accomplish more in the future.
+
+You then walk around in daze, there's something in the back of your mind that you seem to have forgotten. You've misplaced something but you cannot articulate or recall what it actually is.
+
+It's normal for humans to want to go with the mass, that's how corporations or governments instill control.
+
+Be careful not to lose youthful ideologies.

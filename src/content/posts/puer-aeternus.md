@@ -1,17 +1,14 @@
 ---
-import Layout from "../../layouts/Layout.astro"
-import BlogPost from "../../components/BlogPost.astro"
+title: "Jung on the Puer Aeternus"
+date: "2025-03-26"
+description: "An exploration of the Puer aeternus complex in modern society"
+---
 
-const post = {
-	title: "Jung on the Puer Aeternus",
-	date: "2025-03-26",
-	description:
-		"An exploration of the Puer aeternus complex in modern society",
-	content: `This is a collection of cut outs about the Puer aeternus complex which I believe is more apparent today than any other time in history.
+This is a collection of cut outs about the Puer aeternus complex which I believe is more apparent today than any other time in history.
 
-What it's exacerbated by is probably a variation of social media and rapid post industrialisations of huge economies such as China, which has created a massive middle and upper middle class of workers 
+What it's exacerbated by is probably a variation of social media and rapid post industrialisations of huge economies such as China, which has created a massive middle and upper middle class of workers
 
-Didn't apply so much to the USA as 
+Didn't apply so much to the USA as
 
 Carl Jung wrote a paper on the puer aeternus, titled "The Psychology of the Child Archetype", contained in Part IV of The Archetypes and the Collective Unconscious
 
@@ -29,10 +26,4 @@ Her antidote to this, and Jung's, was to pick up something, anything, and see it
 
 A common thing that a puer does is to put all his plans in a box, and store them away, in a gesture of boredom and impatience. This is the great danger. Perhaps the most important thing a puer can do is to take something seriously, and to stick to it.
 
-Lastly from Palmer Luckey "At some point, in business and in life and in romance, you have to commit to a path"`,
-}
----
-
-<Layout>
-	<BlogPost {...post} />
-</Layout>
+Lastly from Palmer Luckey "At some point, in business and in life and in romance, you have to commit to a path"

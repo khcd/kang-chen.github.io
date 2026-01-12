@@ -2,7 +2,7 @@
 interface Props {
 	title: string
 	date: string
-	content: string
+	content?: string
 }
 
 const { title, date, content } = Astro.props
@@ -12,11 +12,7 @@ const { title, date, content } = Astro.props
 	<h1>{title}</h1>
 	<time datetime={date}>{date}</time>
 	<div class="content">
-		{
-			content
-				.split("\n\n")
-				.map((paragraph) => <p set:html={paragraph.trim()} />)
-		}
+		<slot />
 	</div>
 </article>
 
@@ -32,12 +28,63 @@ const { title, date, content } = Astro.props
 		margin: 1rem 0;
 	}
 	.content {
-		line-height: 1.6;
+		line-height: 1.7;
 		font-size: 1.1rem;
 	}
 	.content p {
+		margin: 1.5rem 0 !important;
+		line-height: 1.7 !important;
+		display: block !important;
+	}
+	.content h1,
+	.content h2,
+	.content h3,
+	.content h4,
+	.content h5,
+	.content h6 {
+		margin-top: 2rem;
+		margin-bottom: 1rem;
+		font-weight: bold;
+		line-height: 1.2;
+	}
+	.content ul,
+	.content ol {
+		margin-left: 2rem;
 		margin-bottom: 1.5rem;
-		white-space: pre-line;
+	}
+	.content li {
+		margin-bottom: 0.5rem;
+	}
+	.content blockquote {
+		border-left: 4px solid #ccc;
+		margin: 1.5rem 0;
+		padding-left: 1rem;
+		color: #666;
+		font-style: italic;
+		background: #222;
+	}
+	.content code {
+		background: #222;
+		color: #e6db74;
+		padding: 0.2em 0.4em;
+		border-radius: 4px;
+		font-size: 0.95em;
+	}
+	.content pre {
+		background: #222;
+		color: #e6db74;
+		padding: 1em;
+		border-radius: 6px;
+		overflow-x: auto;
+		margin-bottom: 1.5rem;
+	}
+	.content img {
+		max-width: min(1080px, 100%);
+		width: 100%;
+		height: auto;
+		display: block;
+		margin: 2rem auto;
+		object-fit: cover;
 	}
 	h1 {
 		font-size: 2.5rem;
