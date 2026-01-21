@@ -22,13 +22,9 @@ I only looked at a couple of options:
 
 I chose llama.cpp because it offered direct Vulkan backend support, which theoretically could leverage my dual W5700X setup on macOS through MoltenVK (the Vulkan-to-Metal translation layer).
 
-## The Intel Mac + AMD GPU Unicorn Problem
+## The Intel Mac + AMD GPU combo
 
 Basially discontinued CPU and discontinued GPU = lack of support.
-
-**My setup:**
-- Mac Pro 7,1 (last Intel Mac Pro, discontinued 2023)
-- 2x AMD Radeon Pro W5700X (16GB VRAM each, RDNA1 architecture)
 
 ## Building llama.cpp with Vulkan Support
 
@@ -251,99 +247,41 @@ To use the model with Cline in VS Code:
 - API Key: `dummy` (llama.cpp doesn't validate it)
 - Model ID: `qwen2.5-coder` (or any string, llama.cpp uses whatever model is loaded)
 
-### The Context Window Error
-
-When trying to use Cline with large codebases:
-
-```json
-{
-  "message": "400 request (13398 tokens) exceeds the available context size (4096 tokens)",
-  "n_prompt_tokens": 13398,
-  "n_ctx": 4096
-}
-```
-
-The issue wasn't the model's capability (Qwen2.5-Coder supports 32K natively), but the server's default context limit. Simply restarting with `-c 32768` resolved it.
 
 ### Practical Performance with Cline
 
 Real-world usage patterns:
 
-- **Simple queries** (< 1000 tokens): ~20 t/s, interactive
+- **Simple queries** (< 1000 tokens): ~20-50 t/s, interactive
 - **Medium tasks** (1000-5000 tokens): ~15 t/s, usable
-- **Large context** (5000-15000 tokens): ~10-13 t/s, slower but functional
-- **Huge context** (15000+ tokens): Prompt processing becomes the bottleneck coming down to 5 t/s
+- **Large context** (5000+ tokens): Prompt processing becomes the bottleneck coming down to 5 t/s
 
-## The Prompt Processing Bottleneck: A Technical Deep Dive
-
-### Why Is Prompt Processing Limited to One GPU?
-
-This was perhaps the most interesting technical discovery. Even though token generation happily utilized both GPUs, prompt processing (prefill) stubbornly used only one. The reason is **fundamental to the algorithms involved**.
-
-### Prefill vs. Decode: Different Optimization Characteristics
-
-**Prompt Processing (Prefill):**
-- Processes **all input tokens in parallel** in a single large batch
-- Computes the KV cache for the entire prompt in one forward pass
-- **Memory bandwidth intensive**: Needs to read model weights once and process many tokens
-- High data dependency: Attention computations reference each other
-- **PCIe transfers would kill performance**: Moving intermediate activations between GPUs for every layer creates massive overhead
-
-**Token Generation (Decode):**
-- Processes **one token at a time** sequentially
-- Only computes a new KV cache entry for that single token
-- **Compute intensive**: Repeatedly loads model weights for each token
-- Lower data transfer: Just the new token's hidden states
-- **Multi-GPU helps**: Amortizing PCIe costs over many sequential operations
-
-### The Bandwidth Math
-
-On a single W5700X:
-- GPU memory bandwidth: **448 GB/s**
-
-Between GPUs via PCIe 3.0 x16:
-- Theoretical: **16 GB/s each direction**
-- Practical: ~12-14 GB/s with overhead
-
-For prompt processing, syncing intermediate results across GPUs every layer would create a **~30x bandwidth bottleneck** compared to keeping everything on one GPU.
-
-### Why Multi-GPU Still Works for Decode
-
-During token generation, the **repeated model weight access** (generating 100+ tokens sequentially) amortizes the PCIe overhead:
-
-```
-Single token generation:
-├─ Load layer weights from GPU 0 → process → transfer to GPU 1
-├─ Load layer weights from GPU 1 → process → transfer back
-└─ Repeat for all layers
-```
-
-Over 100 tokens, the overhead becomes acceptable. But for prefill, you'd pay this cost for every position in a potentially 32K token sequence.
-
-### Could This Be Improved?
+## The Prompt Processing Bottleneck (Why Is Prompt Processing Limited to One GPU?)
 
 **Where the logic would need to change:**
 
 The limitation is primarily in **llama.cpp's Vulkan backend**, specifically in how it implements the batched matrix multiplications for attention. To enable multi-GPU prefill would require:
 
+I do not want to claim any specialy over what specifically is the technical difference at the prompt processing stage but from analysis by Claude it was:
+
 1. **Tensor parallelism** for attention operations
 2. **Pipeline parallelism** with careful layer assignment
 3. **Sophisticated scheduling** to overlap communication and computation
 
-None of these are currently implemented in llama.cpp's Vulkan backend, though they exist in more specialized frameworks like vLLM or TensorRT-LLM (which target CUDA/Linux).
+None of these are currently implemented in llama.cpp's Vulkan backend, though they exist in more specialized frameworks like vLLM or TensorRT-LLM which target CUDA.
 
 **MoltenVK's role**: MoltenVK just translates the commands—it can't optimize what llama.cpp doesn't ask it to do. The multi-GPU strategy is decided entirely at the llama.cpp level.
 
 ## Model Testing Results
 
-I was sticking to mainly Qwen because a
+I was sticking to mainly Qwen because it's the only one that currently reliably works with Cline.
 
 | Model | Quantization | VRAM | Prompt t/s | Generate t/s | Quality | Notes |
 |-------|--------------|------|------------|--------------|---------|-------|
 | Qwen2.5-Coder-7B | Q4_K_M | ~5GB | 51.4 | 43.5 | Excellent | Fast, great for quick tasks |
 | Qwen2.5-Coder-14B | Q4_K_M | ~9GB | ~35 | ~25 | Excellent | Good middle ground |
-| Qwen2.5-Coder-32B | Q5_K_M | ~24GB | 15-20 | **13.5** | Outstanding | **Production choice** |
-| DeepSeek-Coder-33B | Q4_K_M | ~20GB | ~18 | 14.7 | Excellent | Alternative to Qwen but does not work at all with Cline due to tool calls? |
+| Qwen2.5-Coder-32B | Q5_K_M | ~24GB | 15-20 | **13.5** | Great | **Production choice** |
+| Qwen3-Coder-32B | N/A | N/A | N/A | N/A |  | **Couldn't get the model to work at multiple settings** |
 
 **Key finding:** Q8 quantization with full GPU offload caused memory boundary issues and crashes, but Q4/Q5 worked flawlessly.
 
@@ -360,19 +298,10 @@ vulkaninfo | grep -i "driverVersion\|driverName"
 
 ### 3. Fallback to CPU Baseline Testing
 
-The 5-minute CPU test immediately told me:
+The 1-minute CPU test immediately told me:
 - The model file was fine
-- llama.cpp itself was working
+- llama.cpp was working
 - The problem was specifically in the GPU code path
-
-### 4. Prompt Processing vs. Token Generation Are Different Problems
-
-Understanding that prefill and decode have fundamentally different optimization characteristics explained why:
-- Single-GPU prefill makes sense algorithmically
-- Multi-GPU decode works well
-- "Just add more GPUs" wouldn't help my large context issue
-
-This knowledge helps set realistic expectations for performance tuning.
 
 ### 5. Quantization Matters (But Not How I Expected)
 
@@ -399,24 +328,17 @@ cd ~/Work/llama.cpp
   --log-disable
 ```
 
-**Performance:**
-- **Prompt processing**: 15-20 t/s (single GPU, memory bandwidth bound)
-- **Token generation**: 13.5 t/s (dual GPU, compute bound)
-- **Context window**: 32K tokens
-- **VRAM usage**: ~28GB (comfortable on 32GB total)
-- **Uptime**: Runs 24/7 reliably
-
 ## Conclusion
 
 What started as a straightforward "build llama.cpp with Vulkan" project turned into a deep dive through the GPU computing stack on macOS. The journey taught me:
 
-- How Vulkan-to-Metal translation works (and fails)
+- How Vulkan-to-Metal translation works
 - Differences between prompt processing and token generation
 - Why multi-GPU setups don't always scale linearly
 
-The final result—13.5 tokens/second on a 32B parameter model with 32K context window, but this is just output speed in reality it falls over in a real life scenario due to large context windows. Say I was trying to analyse a particular file in lamma.cpp it was far closing to 4t/s so many modern CPU's would have been faster?
+The final result—13.5 tokens/second on a 32B parameter model with 32K context window, on paper it had sufficient output speed with dummy tests like write a hello world in python in reality it falls over due to any kind of production work requiring very large context windows. Say I was trying to analyse one function of a file of the lamma.cpp codebase, I was close to the 32K context roof and getting about 4 t/s which was unsable.
 
-For anyone attempting similar setups on Intel Macs with AMD GPUs: **check your MoltenVK version first**. That one command might save you hours.
+For anyone attempting similar setups on Intel Macs with AMD GPUs: **check your MoltenVK version first**.
 
 ## Technical Specifications
 
@@ -443,3 +365,5 @@ For anyone attempting similar setups on Intel Macs with AMD GPUs: **check your M
 ---
 
 *For questions or discussion about this setup, feel free to reach out. The full command examples and configuration files are available in this post.*
+
+*The CLI commands and tables have been provided by Claude but the entire idea of this thing, 
