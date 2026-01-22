@@ -3,12 +3,11 @@ import Layout from "../../layouts/Layout.astro"
 
 const posts = [
 	{
-		title: "Dot Your I's and Cross Your T's",
-		description:
-			"A reflection on thoroughness and confronting difficult situations",
-		slug: "dot-your-is",
-		date: "2024-12-30",
-		year: 2024,
+		title: "Running LLMs on Old Hardware",
+		description: "Running LLMs on old hardware with AMD GPUs",
+		slug: "old-hardware",
+		date: "2026-01-21",
+		year: 2026,
 	},
 	{
 		title: "Jung on the Puer Aeternus",
@@ -17,6 +16,14 @@ const posts = [
 		slug: "puer-aeternus",
 		date: "2025-03-26",
 		year: 2025,
+	},
+	{
+		title: "Dot Your I's and Cross Your T's",
+		description:
+			"A reflection on thoroughness and confronting difficult situations",
+		slug: "dot-your-is",
+		date: "2024-12-30",
+		year: 2024,
 	},
 	{
 		title: "Tools are an Arbitrage",
@@ -59,10 +66,15 @@ const years = Object.keys(postsByYear).sort((a, b) => b - a)
 		<h1>Blog</h1>
 		<p class="blog-info">
 			These are a collection of my personal notes to essays dated back a
-			couple of years. A disclaimer on these notes is they by default
-			aren't AI generated or edited, besides basic gramma or spellcheck.
-			If an article or post does contain generative content I'll be noting
-			it down in footnotes.
+			couple of years. A disclaimer on these notes is they are by default
+			not AI generated or edited, besides spellcheck. If an article or
+			post does contain generative content I'll be noting it down in
+			footnotes.
+		</p>
+		<p class="blog-info">
+			I'm in the process of trying to merge multiple sites and also a
+			bunch of notes on evernote. So the timeline of this blog may change
+			with insertion of new old content.
 		</p>
 
 		{
@@ -83,7 +95,7 @@ const years = Object.keys(postsByYear).sort((a, b) => b - a)
 											{
 												month: "long",
 												day: "numeric",
-											}
+											},
 										)}
 									</time>
 								</article>
@@ -111,7 +123,7 @@ const years = Object.keys(postsByYear).sort((a, b) => b - a)
 	}
 
 	.blog-info {
-		font-size: 1.1rem;
+		font-size: 1rem;
 		color: var(--secondary-text, #666);
 		margin-bottom: 3rem;
 		line-height: 1.5;

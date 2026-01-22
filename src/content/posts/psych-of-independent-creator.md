@@ -12,4 +12,4 @@ The independent creators target market is other aspiring independent creators, t
 
 By posting island snapshots of working conditions they sell the desire is struck by some notion that the safety and regularity of the 9-5 is not right and that we rightful solo entrepreneurs.
 
-The reality of an "indie" creator is more like a triangle of building influencer reputation, building scam apps, and posting about it on social media. Nothing against those who want to learn about technogolies by building and applying knowledge but there is a fine line between scam apps and build to learn.
+The reality of an "indie" creator is more like a triangle of building influencer reputation, building scam apps, and posting about it on social media. Nothing against those who want to learn about technogolies by building and applying knowledge but there is a fine line between scam apps and build to learn and enrich.

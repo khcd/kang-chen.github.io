@@ -16,7 +16,7 @@ So we remember the words of Jung: "You are what you do, not what you say you wil
 
 Interjecting with a bit of Peterson who I do not completely agree with.
 
-Dr. Peterson asks a client to outline a vision of his future, and the client says something to this effect: to become rich enough in a few years to retire to a beach in Mexico, where I can sip margaritas with a harem of beautiful chicas on my arm. In his imagination he will become like the idle rich heroes of the romantic era, riding the euphoria of leisure, subsumed by the sensual.
+A well known pop psychologist asks a client to outline a vision of his future, and the client says something to this effect: to become rich enough in a few years to retire to a beach in Mexico, where I can sip margaritas with a harem of beautiful chicas on my arm. In his imagination he will become like the idle rich heroes of the romantic era, riding the euphoria of leisure, subsumed by the sensual.
 
 Work is the solution for the puer because it is the solution he will resist most.
 

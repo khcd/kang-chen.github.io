@@ -1,43 +1,32 @@
-# Running Local LLMs on Intel Mac with Dual AMD Radeon W5700X GPUs: A Journey Through llama.cpp and MoltenVK
+# Running Local LLMs on Intel Mac with AMD GPUs: A Journey Through llama.cpp and MoltenVK
 
 ## Introduction
 
-I had an old Mac Pro 2019 that I was considering selling for a long time, but becasue they sell for next to nothing now I decided to try running it has a local server for LLMs.
-
-This is the story of how I went from complete gibberish output at 70+ tokens/second to working, coherent inference at 13.5 tokens/second on a 32B parameter model.
+I have an old Mac Pro 2019 that I was considering selling for a long time (funny that 2019 is considered deprecated), but because they sell for next to nothing I decided to try running it as a local server for LLMs. Yes I do realise its far simpler to run inference on Apple silicon rather than intel, but the ultimate goal was to run a server that handled or routed all LLM requests and for that I needed a desktop.
 
 ## Why llama.cpp?
 
-The goal was simple: run large language models locally for Cline in VS Code. The requirements were:
+The first goal was: run large language models locally for Cline in VS Code. The requirements were:
 
 - **Large context windows** (8K-32K tokens) for working with entire codebases
 - **30B+ parameter models** for quality code generation
 - **Cost-effective** infrastructure using hardware I already owned
-- **Reliable** enough for production agent workflows
+- **Reliable** enough for production agent workflows, finding a quantization that did not crash the GPU's
 
-I only looked at a couple of options:
-
-- **vLLM**: High-performance but designed for CUDA/Linux setups
-- **llama.cpp**: Lower-level, maximum control, Vulkan support for AMD GPUs on macOS
-
-I chose llama.cpp because it offered direct Vulkan backend support, which theoretically could leverage my dual W5700X setup on macOS through MoltenVK (the Vulkan-to-Metal translation layer).
-
-## The Intel Mac + AMD GPU combo
-
-Basially discontinued CPU and discontinued GPU = lack of support.
+I really only considered **llama.cpp** as it had Vulkan support for AMD GPUs on macOS. I have not as yet trialed vLLM and other inference engines.
 
 ## Building llama.cpp with Vulkan Support
 
-### Initial Build
+### Initial Build Attempt and Compiler Crash
 
-The build process itself was straightforward:
+The initial build process revealed an immediate issue:
 
 ```bash
 cd ~/Work
-git clone https://github.com/ggml-org/llama.cpp
+git clone https://github.com/ggerganov/llama.cpp.git
 cd llama.cpp
 
-# Build with Vulkan backend
+# First attempt with Vulkan backend
 cmake -B build \
   -DGGML_VULKAN=ON \
   -DCMAKE_BUILD_TYPE=Release
@@ -45,9 +34,48 @@ cmake -B build \
 cmake --build build --config Release
 ```
 
+The build failed at 47% with a compiler crash:
+
+```
+[ 47%] Building CXX object ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/arch/x86/repack.cpp.o
+fatal error: error in backend: Cannot select: 0x7f7dc302c400: v8f16,ch = load<...
+In function: ggml_gemv_q4_K_8x8_q8_K
+clang: error: clang frontend command failed with exit code 70
+Apple clang version 14.0.3 (clang-1403.0.22.14.1)
+```
+
+### The Root Cause: Outdated Compiler and Advanced Instruction Sets
+
+The issue stemmed from using Apple Clang 14.0.3 (from Xcode 14.0.3) which had a bug with the advanced CPU instruction set optimizations that llama.cpp tries to enable by default via `-march=native`.
+
+The `-march=native` flag enables CPU SIMD instructions (Single Instruction, Multiple Data) like AVX2 and AVX-512, which can significantly speed up CPU inference by processing multiple values in parallel. However, when the compiler is outdated, it can miscompile these optimizations.
+
+### The Fix: Disabling Native CPU Optimizations
+
+Since I was building for **GPU inference**, the CPU optimizations were mostly irrelevant anyway:
+
+```bash
+# Clean the failed build
+rm -rf build
+
+# Rebuild WITHOUT native CPU optimizations
+cmake -B build \
+  -DGGML_VULKAN=ON \
+  -DGGML_NATIVE=OFF \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DVulkan_LIBRARY=/usr/local/lib/libvulkan.dylib \
+  -DOpenMP_ROOT=$(brew --prefix)/opt/libomp
+
+cmake --build build --config Release
+```
+
+**The `-DGGML_NATIVE=OFF` flag** disables the problematic `-march=native` compiler flag, preventing the crash.
+
+That said the correct method was update clang to 15.0.0 but this required an update in Xcode.
+
 ### Verifying GPU Detection
 
-The critical first test—did llama.cpp detect both GPUs?
+The first test—did llama.cpp detect both GPUs?
 
 ```bash
 ./build/bin/llama-cli --version
@@ -59,7 +87,7 @@ The critical first test—did llama.cpp detect both GPUs?
 #   - AMD Radeon Pro W5700X (16384 MB)
 ```
 
-Success! Both GPUs were visible to the Vulkan backend.
+Both GPUs were visible to the Vulkan backend.
 
 ## Initial Testing
 
@@ -98,9 +126,9 @@ To verify the model itself wasn't corrupted:
   -ngl 0  # Force CPU only
 ```
 
-Result: Perfect Python code at 9.6 tokens/second.
+Result: Valid Python code at 9.6 tokens/second.
 
-**Conclusion:** The model was fine. GPU acceleration was working (speed proved that), but the output was completely corrupted.
+**Conclusion:** The model was fine. GPU acceleration was working (speed proved that), but the output was corrupted.
 
 ## The Hunt for the Bug
 
@@ -129,7 +157,7 @@ vulkaninfo | grep -i "driverVersion\|driverName"
 
 # Output:
 # driverName: MoltenVK
-# driverVersion: 0.2.2019 (10211)  # <- The smoking gun!
+# driverVersion: 0.2.2019 (10211)
 ```
 
 **MoltenVK version 0.2.2019**—from 2019! I was running a six-year-old translation layer. Maybe something I fiddled around with back in the day?
@@ -153,11 +181,9 @@ AMD GPU hardware
 ### The Upgrade Process
 
 ```bash
-# Check what Homebrew has
 brew info molten-vk
 # Output: stable 1.4.0 (bottled)
 
-# Install the update
 brew upgrade molten-vk
 
 # Fix permissions (needed on my system)
@@ -198,7 +224,7 @@ def fibonacci(n):
 [ Prompt: 51.4 t/s | Generation: 43.5 t/s ]
 ```
 
-**Perfect coherent Python code at 43.5 tokens per second.** The MoltenVK upgrade had fixed it.
+Valid Python code at 43.5 tokens per second. The MoltenVK upgrade had fixed it.
 
 ## Scaling Up: Testing Larger Models
 
@@ -223,30 +249,7 @@ Performance:
 - **Context window**: 32K tokens working reliably
 - **VRAM usage**: ~28GB across both GPUs
 
-This was the sweet spot—large enough for complex code generation, fast enough for interactive use.
-
-## Integration with Cline: The Large Context Challenge
-
-### Setting Up llama.cpp as an OpenAI-Compatible Server
-
-To use the model with Cline in VS Code:
-
-```bash
-# Start llama-server
-./build/bin/llama-server \
-  -m qwen2.5-coder-32b-instruct-q5_k_m.gguf \
-  --host 0.0.0.0 \
-  --port 8080 \
-  -c 32768 \
-  -ngl 999
-```
-
-**Cline configuration:**
-- Provider: OpenAI Compatible
-- Base URL: `http://localhost:8080/v1`
-- API Key: `dummy` (llama.cpp doesn't validate it)
-- Model ID: `qwen2.5-coder` (or any string, llama.cpp uses whatever model is loaded)
-
+This was the max parameters my gpus could handle in VRAM and also really in usable speeds for token output or so I thought.
 
 ### Practical Performance with Cline
 
@@ -270,7 +273,55 @@ I do not want to claim any specialy over what specifically is the technical diff
 
 None of these are currently implemented in llama.cpp's Vulkan backend, though they exist in more specialized frameworks like vLLM or TensorRT-LLM which target CUDA.
 
-**MoltenVK's role**: MoltenVK just translates the commands—it can't optimize what llama.cpp doesn't ask it to do. The multi-GPU strategy is decided entirely at the llama.cpp level.
+**Qwen3 sidetrack**
+
+I tried to upgrade to the Qwen3 model in various Q4 and Q5 and all of them had garbled output on the GPUs.
+
+I hypothesized that the issue was related to **asynchronous execution** in server due to a github issue posted about the Intel DG1 having broken output in async mode.
+
+The theory was that Vulkan fence synchronization (`vkWaitForFences`) wasn't properly blocking in the server's async context, causing the sampler to read from GPU memory before the computation completed. This investigation was aided by an LLM.
+
+### Investigating the Code
+
+Tracing through llama.cpp's Vulkan backend code:
+
+```cpp
+// File: ggml-vulkan.cpp
+static void ggml_backend_vk_synchronize(ggml_backend_t backend) {
+    // This fence wait might be failing in async context
+    VK_CHECK(vkWaitForFences(device, 1, &fence, VK_TRUE, UINT64_MAX));
+    // Returns before GPU actually completes?
+}
+```
+
+I added custom logging to track fence states and looked into the scheduler differences:
+
+```cpp
+// Server async path (suspected problem)
+ggml_backend_sched_graph_compute_async(...);
+
+// CLI sync path (worked fine)
+ggml_backend_sched_graph_compute(...);
+ggml_backend_synchronize(backend);
+```
+
+### The Attempted Fix
+
+I tried disabling async mode entirely by modifying llama.cpp source, thinking it was the same bug affecting the Intel DG1 and since W5700X is also a fairly obscure GPU (for inference anyways).
+
+```cpp
+device->support_async = 
+    (device->vendor_id != VK_VENDOR_ID_INTEL || 
+     std::string(device->properties.deviceName).find("(DG1)") == std::string::npos) &&
+    std::string(device->properties.deviceName).find("W5700X") == std::string::npos &&
+    getenv("GGML_VK_DISABLE_ASYNC") == nullptr;
+```
+
+This would force synchronous execution even in server mode. Since I was only running the server for myself I didn't require the async processing.
+
+Unfortunately this hunch was not correct as Qwen3 remained corrupted even without async mode.
+
+Therefore sticking to Qwen2.5 these were the final results.
 
 ## Model Testing Results
 
@@ -287,12 +338,11 @@ I was sticking to mainly Qwen because it's the only one that currently reliably 
 
 ## Lessons Learned
 
-### 1. Check Your Dependencies (Especially Translation Layers)
+### 1. Check Your Vulkan Dependencies (Especially Translation Layers)
 
-MoltenVK being 6 years out of date was a bit of a hidden issue. On macOS with AMD GPUs, **verify your MoltenVK version** before assuming hardware or software bugs.
+MoltenVK being 6 years out of date was a hidden issue. On macOS with AMD GPUs, **verify your MoltenVK version** before assuming hardware or software bugs.
 
 ```bash
-# Always run this first
 vulkaninfo | grep -i "driverVersion\|driverName"
 ```
 
@@ -303,13 +353,11 @@ The 1-minute CPU test immediately told me:
 - llama.cpp was working
 - The problem was specifically in the GPU code path
 
-### 5. Quantization Matters (But Not How I Expected)
+### 5. Quantization
 
-Q4 and Q5 quantizations worked perfectly. Q8 hit memory boundary issues and caused corruption with full offload (`-ngl 99`), but worked fine with hybrid offload (`-ngl 50`). The lesson: **more bits isn't always better** if it pushes you past VRAM limits or into unstable memory regions.
+Q4 and Q5 quantizations worked perfectly. Q8 hit memory boundary issues and caused corruption with full offload (`-ngl 99`), but worked fine with hybrid offload (`-ngl 50`). The lesson don't push past VRAM limits or into unstable memory regions.
 
 ## Final Configuration
-
-My production setup for AI-assisted coding:
 
 ```bash
 #!/bin/bash
@@ -330,15 +378,11 @@ cd ~/Work/llama.cpp
 
 ## Conclusion
 
-What started as a straightforward "build llama.cpp with Vulkan" project turned into a deep dive through the GPU computing stack on macOS. The journey taught me:
+The final result 13.5 tokens/second on a 32B parameter model with 32K context window, on paper it had sufficient output speed with dummy tests like write a hello world in python, in reality it falls over for any kind of production work requiring very large context windows. As an example I was trying to analyse a single function of a file ggml-vulkan.cpp from the lamma.cpp codebase, I was close to the 32K context roof and getting about 4 t/s which was completely unusable.
 
-- How Vulkan-to-Metal translation works
-- Differences between prompt processing and token generation
-- Why multi-GPU setups don't always scale linearly
+What started as a straightforward "build llama.cpp with Vulkan" project turned into a dive through the GPU computing stack on macOS. 
 
-The final result—13.5 tokens/second on a 32B parameter model with 32K context window, on paper it had sufficient output speed with dummy tests like write a hello world in python in reality it falls over due to any kind of production work requiring very large context windows. Say I was trying to analyse one function of a file of the lamma.cpp codebase, I was close to the 32K context roof and getting about 4 t/s which was unsable.
-
-For anyone attempting similar setups on Intel Macs with AMD GPUs: **check your MoltenVK version first**.
+For anyone attempting similar setups on Intel Macs with AMD GPUs: **check your MoltenVK version first**. Or depending on your GPU it might be worth going Linux and ROCm rather than the Vulkan path.
 
 ## Technical Specifications
 
@@ -364,6 +408,12 @@ For anyone attempting similar setups on Intel Macs with AMD GPUs: **check your M
 
 ---
 
-*For questions or discussion about this setup, feel free to reach out. The full command examples and configuration files are available in this post.*
+Side notes. 
 
-*The CLI commands and tables have been provided by Claude but the entire idea of this thing, 
+From the llama.cpp <a href="https://github.com/ggml-org/llama.cpp/discussions/205" target="_blank" rel="noopener noreferrer">manifesto</a>: "efficient transformer model inference on-device (i.e. at the edge)." - adding to this I would say there is an additional point of what edge is. Which encompasses any hardware or any combination of hardware that is capable of runnng inference on models. This is adjunct to what andrej karpathy has noted we need more education as to not be lost in the future about what computing is and what computers do.
+
+Vulkan might be coming to Apple Silicon without the MoltenVK transalation layer.
+
+<a href="https://rosenzweig.io/blog/vk13-on-the-m1-in-1-month.html" target="_blank" rel="noopener noreferrer">Person that is hacking Vulkan driver for OSX</a>
+
+*The CLI commands and comparison tables have been provided by Claude but the entire exploration of this thing was my idea.
