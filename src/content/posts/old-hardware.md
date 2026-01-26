@@ -160,13 +160,7 @@ vulkaninfo | grep -i "driverVersion\|driverName"
 # driverVersion: 0.2.2019 (10211)
 ```
 
-**MoltenVK version 0.2.2019**—from 2019! I was running a six-year-old translation layer. Maybe something I fiddled around with back in the day?
-
-## The Critical Discovery: MoltenVK Version
-
-### Understanding MoltenVK
-
-MoltenVK is a translation layer that converts Vulkan API calls to Metal API calls on macOS:
+**MoltenVK version 0.2.2019**—from 2019! I was running a six-year-old translation layer. Maybe something I fiddled around with back in the day
 
 ```
 llama.cpp (Vulkan calls)
@@ -327,12 +321,12 @@ Therefore sticking to Qwen2.5 these were the final results.
 
 I was sticking to mainly Qwen because it's the only one that currently reliably works with Cline.
 
-| Model | Quantization | VRAM | Prompt t/s | Generate t/s | Quality | Notes |
-|-------|--------------|------|------------|--------------|---------|-------|
-| Qwen2.5-Coder-7B | Q4_K_M | ~5GB | 51.4 | 43.5 | Excellent | Fast, great for quick tasks |
-| Qwen2.5-Coder-14B | Q4_K_M | ~9GB | ~35 | ~25 | Excellent | Good middle ground |
-| Qwen2.5-Coder-32B | Q5_K_M | ~24GB | 15-20 | **13.5** | Great | **Production choice** |
-| Qwen3-Coder-32B | N/A | N/A | N/A | N/A |  | **Couldn't get the model to work at multiple settings** |
+| Model | Quantization | VRAM | Prompt t/s | Generate t/s | Notes |
+|-------|--------------|------|------------|--------------|-------|
+| Qwen2.5-Coder-7B | Q4_K_M | ~5GB | 51.4 | 43.5 |  |
+| Qwen2.5-Coder-14B | Q4_K_M | ~9GB | ~35 | ~25 |  |
+| Qwen2.5-Coder-32B | Q5_K_M | ~24GB | 15-20 | 13.5 | I believe only 32B plus is useful for any production work |
+| Qwen3-Coder-32B | N/A | N/A | N/A | N/A | Didn't work at any quantization |
 
 **Key finding:** Q8 quantization with full GPU offload caused memory boundary issues and crashes, but Q4/Q5 worked flawlessly.
 
@@ -416,4 +410,11 @@ Vulkan might be coming to Apple Silicon without the MoltenVK transalation layer.
 
 <a href="https://rosenzweig.io/blog/vk13-on-the-m1-in-1-month.html" target="_blank" rel="noopener noreferrer">Person that is hacking Vulkan driver for OSX</a>
 
+inference references
+https://kipp.ly/h100-inferencing/
+
+G
+
 *The CLI commands and comparison tables have been provided by Claude but the entire exploration of this thing was my idea.
+
+
