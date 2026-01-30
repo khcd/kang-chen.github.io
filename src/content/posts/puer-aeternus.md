@@ -6,15 +6,12 @@ description: "An exploration of the Puer aeternus complex in modern society"
 
 This is a collection of cut outs about the Puer aeternus complex which I believe is more apparent today than any other time in history.
 
-What it's exacerbated by is probably a variation of social media and rapid post industrialisations of huge economies such as China, which has created a massive middle and upper middle class of workers
+What it's exacerbated by is probably a variation of social media and rapid post industrialisations of huge economies such as China, which has created a massive middle and upper middle class of workers.
 
-Didn't apply so much to the USA as
 
-Carl Jung wrote a paper on the puer aeternus, titled "The Psychology of the Child Archetype", contained in Part IV of The Archetypes and the Collective Unconscious
+Carl Jung wrote a paper on the puer aeternus, titled "The Psychology of the Child Archetype", contained in Part IV of The Archetypes and the Collective Unconscious.
 
-So we remember the words of Jung: "You are what you do, not what you say you will do."
-
-Interjecting with a bit of Peterson who I do not completely agree with.
+So we remember the words of Jung: "You are what you do, not what you say you will do".
 
 A well known pop psychologist asks a client to outline a vision of his future, and the client says something to this effect: to become rich enough in a few years to retire to a beach in Mexico, where I can sip margaritas with a harem of beautiful chicas on my arm. In his imagination he will become like the idle rich heroes of the romantic era, riding the euphoria of leisure, subsumed by the sensual.
 
@@ -22,8 +19,8 @@ Work is the solution for the puer because it is the solution he will resist most
 
 Her antidote to this, and Jung's, was to pick up something, anything, and see it through all the way. Yes, they risk wasting their time like the other, but at least their mentality changes and becomes more mature and patient. You'd be surprised how most of the time, that chosen domain ends up being the thing that brings you happiness and meaning.
 
-<a href="https://eternalisedofficial.com/2022/10/09/puer-aeternus-psychology/" target="_blank" rel="noopener noreferrer">Eternalised - Puer Aeternus Psychology</a>
+<a href="https://eternalisedofficial.com/2022/10/09/puer-aeternus-psychology/" target="_blank" rel="noopener noreferrer">Eternalised - Puer Aeternus Psychology</a>.
 
 A common thing that a puer does is to put all his plans in a box, and store them away, in a gesture of boredom and impatience. This is the great danger. Perhaps the most important thing a puer can do is to take something seriously, and to stick to it.
 
-Lastly from Palmer Luckey "At some point, in business and in life and in romance, you have to commit to a path"
+Lastly from Palmer Luckey "At some point, in business and in life and in romance, you have to commit to a path".

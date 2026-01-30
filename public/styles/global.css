@@ -12,6 +12,8 @@
   --nav-link-color: #333333;
   --nav-link-hover: #666666;
   --content-width: 1200px;
+  --link-color: #0066cc;
+  --link-visited-color: #551a8b;
 }
 
 [data-theme="dark"] {
@@ -26,6 +28,8 @@
   --secondary-text: #e0e0e0;
   --tag-bg: #3d3d3d;
   --tag-color: #ffffff;
+  --link-color: #7dd3fc;
+  --link-visited-color: #a78bfa;
 }
 
 body {
@@ -312,4 +316,20 @@ main {
   color: #666;
   font-style: italic;
   background: #222;
-} 
+}
+
+/* Anchor link styles */
+.content a:link {
+  color: var(--link-color);
+  text-decoration: underline;
+}
+
+.content a:visited {
+  color: var(--link-visited-color);
+  text-decoration: underline;
+}
+
+.content a:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}

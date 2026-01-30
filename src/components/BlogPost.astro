@@ -21,6 +21,8 @@ const { title, date, content } = Astro.props
 		margin: 2rem auto;
 		max-width: 800px;
 		padding: 0 1rem;
+		box-sizing: border-box;
+		overflow-x: hidden;
 	}
 	time {
 		color: #666;
@@ -30,6 +32,8 @@ const { title, date, content } = Astro.props
 	.content {
 		line-height: 1.7;
 		font-size: 1rem;
+		max-width: 100%;
+		box-sizing: border-box;
 	}
 	.content p {
 		margin: 1.5rem 0 !important;
@@ -78,13 +82,20 @@ const { title, date, content } = Astro.props
 		overflow-x: auto;
 		margin-bottom: 1.5rem;
 	}
+	/* Style paragraphs that contain images - ensure they're centered */
+	.content p:has(> img) {
+		text-align: center;
+		margin: 2rem 0 !important;
+		padding: 0;
+	}
+
 	.content img {
-		max-width: min(1080px, 100%);
-		width: 100%;
+		/* Keep images constrained to article width and centered */
+		max-width: 100%;
+		width: auto;
 		height: auto;
 		display: block;
-		margin: 2rem auto;
-		object-fit: cover;
+		margin: 0 auto;
 	}
 	h1 {
 		font-size: 2.5rem;
