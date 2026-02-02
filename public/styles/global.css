@@ -88,6 +88,9 @@ header .container {
   justify-content: flex-start;
   align-items: flex-end;
   gap: 2rem;
+  max-width: 800px;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 h1 {
@@ -246,8 +249,8 @@ main {
   width: 100%;
   max-width: var(--content-width);
   margin: 0 auto;
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 /* Blog specific dark mode styles */
@@ -428,4 +431,8 @@ main {
 
 .footer-column a:hover {
   color: #fff;
+}
+
+.center {
+  align-items: center;
 }

@@ -63,23 +63,9 @@ const years = Object.keys(postsByYear).sort((a, b) => Number(b) - Number(a))
 ---
 
 <Layout>
-	<section>
-		<p class="center padding-large">
-			Bio fill in
-		</p>
-	</section>
-
-	<section class="projects-section">
-		<div class="projects-blurb">
-			<h2>Projects</h2>
-			<p>
-				Creative coding, installations, games, and tools—work that spans
-				WebGL experiments, festival projections, and developer utilities.
-			</p>
-			<a href="/projects" class="view-projects">View all projects →</a>
-		</div>
-	</section>
-
+	<div class="bio-section">
+		<p>Bio fill in</p>
+	</div>
 	<div class="blog-index">
 		{
 			years.map((year) => (
@@ -129,6 +115,16 @@ const years = Object.keys(postsByYear).sort((a, b) => Number(b) - Number(a))
 	.bio-links span {
 		color: #888;
 		margin: 0 0.3rem;
+	}
+
+	.bio-section {
+		max-width: 800px;
+		margin: 0 auto;
+		padding: 2rem 1rem 0;
+	}
+
+	.bio-section p {
+		margin: 0;
 	}
 
 	.blog-index {
@@ -188,10 +184,6 @@ const years = Object.keys(postsByYear).sort((a, b) => Number(b) - Number(a))
 	time {
 		font-size: 0.875rem;
 		color: var(--secondary-text, #888);
-	}
-
-	.padding-large {
-		padding: 0 50px;
 	}
 
 	.projects-section {
