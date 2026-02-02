@@ -1,0 +1,94 @@
+---
+// src/pages/projects/x86-mono-game.astro
+import Layout from "../../layouts/Layout.astro"
+
+const project = {
+	title: "X86",
+	year: 2024,
+	tags: ["C#", "MonoGame", "2D Game Development"],
+}
+---
+
+<Layout>
+	<div class="project-detail">
+		<h1>{project.title}</h1>
+		<p class="project-meta">{project.year} · {project.tags.join(" · ")}</p>
+
+		<div class="project-content">
+			<p>
+				X86 is my foray into proper game development—a top-down shooter built
+				with MonoGame, the spiritual successor to XNA. After years of working
+				in web technologies, I wanted to return to systems-level thinking:
+				game loops, frame timing, sprite batching, and the discipline of
+				working without a garbage collector's safety net.
+			</p>
+
+			<p>
+				The game features procedurally generated spacecraft, dynamic enemy AI,
+				and boss battles that escalate in complexity. Rather than relying on
+				pre-made assets, the visuals are generated algorithmically—each ship
+				is unique, assembled from parametric rules rather than static sprites.
+			</p>
+
+			<p>
+				The weapon system includes standard projectiles, twin-tracking missiles,
+				and fire bombs. There's a rhythm to the combat that I spent considerable
+				time tuning—the feedback loop between player action and enemy response
+				needed to feel responsive but not trivial.
+			</p>
+
+			<p>
+				Building in C# with MonoGame stripped away the abstractions I'd grown
+				comfortable with. No React diffing. No browser APIs. Just you, the
+				update loop, and the draw call. It's a different kind of programming,
+				more immediate and more demanding.
+			</p>
+		</div>
+
+		<div class="project-links">
+			<p class="note">Controls: Arrow keys/WASD to move, Space to fire, Q for missiles, M for firebomb.</p>
+		</div>
+	</div>
+</Layout>
+
+<style>
+	.project-detail {
+		max-width: 700px;
+		margin: 0 auto;
+		padding: 3rem 1.5rem;
+	}
+
+	h1 {
+		font-size: 2rem;
+		font-weight: 500;
+		margin-bottom: 0.5rem;
+		color: var(--text-color);
+	}
+
+	.project-meta {
+		font-size: 0.9rem;
+		color: var(--secondary-text, #666);
+		margin-bottom: 2.5rem;
+	}
+
+	.project-content {
+		line-height: 1.8;
+		color: var(--text-color);
+	}
+
+	.project-content p {
+		margin-bottom: 1.5rem;
+	}
+
+	.project-links {
+		margin-top: 2rem;
+		padding-top: 1.5rem;
+		border-top: 1px solid var(--border-color, #e0e0e0);
+	}
+
+	.note {
+		font-size: 0.9rem;
+		color: var(--secondary-text, #888);
+		font-style: italic;
+	}
+</style>

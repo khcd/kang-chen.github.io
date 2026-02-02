@@ -68,6 +68,18 @@ const years = Object.keys(postsByYear).sort((a, b) => Number(b) - Number(a))
 			Bio fill in
 		</p>
 	</section>
+
+	<section class="projects-section">
+		<div class="projects-blurb">
+			<h2>Projects</h2>
+			<p>
+				Creative coding, installations, games, and tools—work that spans
+				WebGL experiments, festival projections, and developer utilities.
+			</p>
+			<a href="/projects" class="view-projects">View all projects →</a>
+		</div>
+	</section>
+
 	<div class="blog-index">
 		{
 			years.map((year) => (
@@ -180,5 +192,42 @@ const years = Object.keys(postsByYear).sort((a, b) => Number(b) - Number(a))
 
 	.padding-large {
 		padding: 0 50px;
+	}
+
+	.projects-section {
+		max-width: 800px;
+		margin: 0 auto 3rem;
+		padding: 0 1rem;
+	}
+
+	.projects-blurb {
+		padding: 2rem;
+		border-radius: 8px;
+		background-color: var(--card-background, #fafafa);
+		border: 1px solid var(--border-color, #e0e0e0);
+	}
+
+	.projects-blurb h2 {
+		font-size: 1.5rem;
+		font-weight: 500;
+		margin: 0 0 0.75rem;
+		color: var(--text-color);
+	}
+
+	.projects-blurb p {
+		font-size: 1rem;
+		color: var(--secondary-text, #666);
+		margin: 0 0 1rem;
+		line-height: 1.6;
+	}
+
+	.view-projects {
+		font-size: 0.95rem;
+		color: var(--link-color, #4ea1f7);
+		text-decoration: none;
+	}
+
+	.view-projects:hover {
+		text-decoration: underline;
 	}
 </style>

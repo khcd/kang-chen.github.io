@@ -1,0 +1,98 @@
+---
+// src/pages/projects/sketch-export-generator.astro
+import Layout from "../../layouts/Layout.astro"
+
+const project = {
+	title: "Sketch Export Generator",
+	year: 2015,
+	tags: ["Sketch Plugin", "Design Tools", "Productivity"],
+}
+---
+
+<Layout>
+	<div class="project-detail">
+		<h1>{project.title}</h1>
+		<p class="project-meta">{project.year} · {project.tags.join(" · ")}</p>
+
+		<div class="project-content">
+			<p>
+				In 2015, Sketch was rapidly becoming the tool of choice for UI designers,
+				but it had a frustrating limitation: exporting assets for both iOS and
+				Android meant tedious, repetitive work. Each platform needed different
+				sizes, different naming conventions, and different folder structures.
+			</p>
+
+			<p>
+				Sketch Export Generator was born from that friction. A single keyboard
+				shortcut—Shift + Option + Command + E—and suddenly you had all your
+				export sizes configured for both platforms simultaneously.
+			</p>
+
+			<p>
+				Built in collaboration with Philippe Hong, the plugin was a small utility
+				that solved a real problem. It wasn't revolutionary, but it was useful.
+				Thousands of designers added it to their workflow, and it continued
+				receiving updates through Sketch 48.2.
+			</p>
+
+			<p>
+				Eventually, Sketch added native multi-export features, making the plugin
+				obsolete. That's the best outcome for any tool—when the platform absorbs
+				the idea and you become unnecessary. It means you were solving a problem
+				that needed solving.
+			</p>
+		</div>
+
+		<div class="project-links">
+			<p class="note">
+				Co-created with <a href="http://philippehong.com" target="_blank" rel="noopener">Philippe Hong</a>
+			</p>
+		</div>
+	</div>
+</Layout>
+
+<style>
+	.project-detail {
+		max-width: 700px;
+		margin: 0 auto;
+		padding: 3rem 1.5rem;
+	}
+
+	h1 {
+		font-size: 2rem;
+		font-weight: 500;
+		margin-bottom: 0.5rem;
+		color: var(--text-color);
+	}
+
+	.project-meta {
+		font-size: 0.9rem;
+		color: var(--secondary-text, #666);
+		margin-bottom: 2.5rem;
+	}
+
+	.project-content {
+		line-height: 1.8;
+		color: var(--text-color);
+	}
+
+	.project-content p {
+		margin-bottom: 1.5rem;
+	}
+
+	.project-links {
+		margin-top: 2rem;
+		padding-top: 1.5rem;
+		border-top: 1px solid var(--border-color, #e0e0e0);
+	}
+
+	.note {
+		font-size: 0.9rem;
+		color: var(--secondary-text, #888);
+		font-style: italic;
+	}
+
+	.note a {
+		color: var(--link-color, #4ea1f7);
+	}
+</style>

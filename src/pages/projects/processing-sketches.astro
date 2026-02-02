@@ -1,0 +1,93 @@
+---
+// src/pages/projects/processing-sketches.astro
+import Layout from "../../layouts/Layout.astro"
+
+const project = {
+	title: "Processing Sketches",
+	year: 2024,
+	tags: ["Processing", "Generative Art", "Creative Coding"],
+}
+---
+
+<Layout>
+	<div class="project-detail">
+		<h1>{project.title}</h1>
+		<p class="project-meta">{project.year} · {project.tags.join(" · ")}</p>
+
+		<div class="project-content">
+			<p>
+				Processing has been my sketchbook for computational ideas since I first
+				encountered it. These sketches represent ongoing experiments—some
+				deliberate explorations, others happy accidents discovered while
+				testing parameters.
+			</p>
+
+			<p>
+				The collection includes studies in colour bar motion, where vertical
+				strips animate with Brownian motion patterns. There's something
+				meditative about watching colour fields drift and bounce within
+				constraints—ordered chaos that never quite repeats.
+			</p>
+
+			<p>
+				A separate thread explores network density visualizations for Bittensor,
+				attempting to represent the topology of decentralized systems in ways
+				that reveal structure without overwhelming with complexity. These sketches
+				iterate through different approaches to the same fundamental question:
+				how do you make the invisible visible?
+			</p>
+
+			<p>
+				Other experiments deal with square distortion, interpolation studies,
+				and jellyfish-like particle animations. Each sketch starts small—a
+				single idea tested until it either fails or opens up new directions.
+			</p>
+		</div>
+
+		<div class="project-links">
+			<p class="note">Collection includes 19+ discrete experiments spanning 2024.</p>
+		</div>
+	</div>
+</Layout>
+
+<style>
+	.project-detail {
+		max-width: 700px;
+		margin: 0 auto;
+		padding: 3rem 1.5rem;
+	}
+
+	h1 {
+		font-size: 2rem;
+		font-weight: 500;
+		margin-bottom: 0.5rem;
+		color: var(--text-color);
+	}
+
+	.project-meta {
+		font-size: 0.9rem;
+		color: var(--secondary-text, #666);
+		margin-bottom: 2.5rem;
+	}
+
+	.project-content {
+		line-height: 1.8;
+		color: var(--text-color);
+	}
+
+	.project-content p {
+		margin-bottom: 1.5rem;
+	}
+
+	.project-links {
+		margin-top: 2rem;
+		padding-top: 1.5rem;
+		border-top: 1px solid var(--border-color, #e0e0e0);
+	}
+
+	.note {
+		font-size: 0.9rem;
+		color: var(--secondary-text, #888);
+		font-style: italic;
+	}
+</style>

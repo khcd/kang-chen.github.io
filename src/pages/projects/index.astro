@@ -4,65 +4,39 @@ import Layout from "../../layouts/Layout.astro"
 
 const projects = [
 	{
-		title: "Project One",
+		title: "X86",
 		year: 2024,
-		image: "https://picsum.photos/id/1/800/600",
-		slug: "project-one",
+		slug: "x86-mono-game",
 		description:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris.",
+			"A top-down shooter built with C# and MonoGame. Procedurally generated spacecraft, dynamic enemy AI, and boss battles.",
 	},
 	{
-		title: "Project Two",
+		title: "Processing Sketches",
 		year: 2024,
-		image: "https://picsum.photos/id/2/800/600",
-		slug: "project-two",
+		slug: "processing-sketches",
 		description:
-			"Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.",
+			"Generative art experiments in Processing—colour bar animations, network density visualizations, and interpolation studies.",
 	},
 	{
-		title: "Project Three",
-		year: 2023,
-		image: "https://picsum.photos/id/3/800/600",
-		slug: "project-three",
+		title: "Hyperbland",
+		year: 2022,
+		slug: "hyperbland",
 		description:
-			"Suspendisse potenti. Cras in purus eu magna vulputate luctus.",
+			"WebGL experiments testing the limits of real-time computational geometry rendering. Torus rotations, NURBS surfaces, and accidental visual discoveries.",
 	},
 	{
-		title: "Project Four",
-		year: 2023,
-		image: "https://picsum.photos/id/4/800/600",
-		slug: "project-four",
+		title: "Particle Skull",
+		year: 2016,
+		slug: "particle-skull",
 		description:
-			"Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.",
+			"Large-scale projection for Beams Festival, City of Sydney. A 3D skull dissolving into particles, responsive to audio.",
 	},
 	{
-		title: "Project Five",
-		year: 2022,
-		image: "https://picsum.photos/id/5/800/600",
-		slug: "project-five",
-		description: "Vestibulum ac est lacinia nisi venenatis tristique.",
-	},
-	{
-		title: "Project Six",
-		year: 2022,
-		image: "https://picsum.photos/id/6/800/600",
-		slug: "project-six",
-		description: "Fusce convallis metus id felis luctus adipiscing.",
-	},
-	{
-		title: "Project Seven",
-		year: 2022,
-		image: "https://picsum.photos/id/7/800/600",
-		slug: "project-seven",
+		title: "Sketch Export Generator",
+		year: 2015,
+		slug: "sketch-export-generator",
 		description:
-			"Maecenas tristique, est et tempus semper, est quam pharetra magna.",
-	},
-	{
-		title: "Project Eight",
-		year: 2022,
-		image: "https://picsum.photos/id/8/800/600",
-		slug: "project-eight",
-		description: "Donec dapibus. Duis at velit eu est congue elementum.",
+			"Sketch plugin for simultaneous iOS and Android exports. One shortcut to generate all asset sizes.",
 	},
 ]
 
@@ -79,6 +53,10 @@ const years = Object.keys(projectsByYear).sort((a, b) => Number(b) - Number(a))
 <Layout>
 	<div class="projects-index">
 		<h1>Projects</h1>
+		<p class="intro">
+			A selection of creative and technical work spanning games, generative art,
+			installations, and developer tools.
+		</p>
 		{
 			years.map((year) => (
 				<section class="year-section">
@@ -90,10 +68,6 @@ const years = Object.keys(projectsByYear).sort((a, b) => Number(b) - Number(a))
 								class="project-link"
 							>
 								<article class="project-card">
-									<img
-										src={project.image}
-										alt={project.title}
-									/>
 									<div class="project-content">
 										<h3>{project.title}</h3>
 										<p class="description">
@@ -120,25 +94,32 @@ const years = Object.keys(projectsByYear).sort((a, b) => Number(b) - Number(a))
 	h1 {
 		font-size: 2rem;
 		font-weight: 500;
-		margin-bottom: 1rem;
+		margin-bottom: 0.5rem;
 		color: var(--text-color);
+	}
+
+	.intro {
+		font-size: 1rem;
+		color: var(--secondary-text, #666);
+		margin-bottom: 2.5rem;
+		line-height: 1.6;
 	}
 
 	.year-section {
-		margin-bottom: 4rem;
+		margin-bottom: 3rem;
 	}
 
 	.year-section h2 {
-		font-size: 1.5rem;
+		font-size: 1.25rem;
 		font-weight: 500;
-		margin-bottom: 1.5rem;
-		color: var(--text-color);
+		margin-bottom: 1rem;
+		color: var(--secondary-text, #888);
 	}
 
 	.projects-list {
 		display: flex;
 		flex-direction: column;
-		gap: 1.5rem;
+		gap: 1rem;
 	}
 
 	.project-link {
@@ -147,10 +128,10 @@ const years = Object.keys(projectsByYear).sort((a, b) => Number(b) - Number(a))
 	}
 
 	.project-card {
+		padding: 1.5rem;
 		border-radius: 8px;
 		background-color: var(--background-color);
 		border: 1px solid var(--border-color, transparent);
-		overflow: hidden;
 		transition:
 			transform 0.2s,
 			box-shadow 0.2s;
@@ -160,17 +141,6 @@ const years = Object.keys(projectsByYear).sort((a, b) => Number(b) - Number(a))
 		transform: translateY(-2px);
 		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 		background-color: var(--card-hover, #f5f5f5);
-	}
-
-	.project-card img {
-		width: 100%;
-		height: 200px;
-		object-fit: cover;
-		display: block;
-	}
-
-	.project-content {
-		padding: 1.5rem;
 	}
 
 	.project-card h3 {
