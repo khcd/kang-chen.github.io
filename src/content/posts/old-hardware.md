@@ -1,3 +1,9 @@
+---
+title: "Running LLMs on Old Hardware"
+date: "2026-01-21"
+description: "Running LLMs on old hardware with AMD GPUs"
+---
+
 # Running Local LLMs on Intel Mac with AMD GPUs: A Journey Through llama.cpp and MoltenVK
 
 ## Introduction

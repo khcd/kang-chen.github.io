@@ -1,23 +1,23 @@
 import rss from '@astrojs/rss';
-import { getCollection } from 'astro:content';
 
 export async function GET(context) {
-  const posts = [
-    {
-      title: "Psychology of the Independent Creator",
-      description: "Exploring how ideologies shape identity and the importance of maintaining youthful ideals in creative work",
-      slug: "psych-of-independent-creator",
-      date: "2023-07-25",
-      year: 2023
-    },
-    {
-      title: "The Power of Youthful Ideologies",
-      description: "A reflection on how maintaining youthful ideals can shape our identity and creative journey",
-      slug: "youthful-ideologies",
-      date: "2023-06-28",
-      year: 2023
-    }
-  ];
+  // Dynamically import all blog posts from the content directory
+  const postImports = import.meta.glob('../content/posts/*.md', { eager: true });
+
+  const posts = Object.entries(postImports).map(([path, post]) => {
+    // Extract slug from file path
+    const slug = path.split('/').pop().replace(/\.md$/, '');
+
+    return {
+      title: post.frontmatter?.title || 'Untitled',
+      description: post.frontmatter?.description || '',
+      slug: slug,
+      date: post.frontmatter?.date || new Date().toISOString(),
+    };
+  }).filter(post => post.title !== 'Untitled'); // Filter out posts without frontmatter
+
+  // Sort posts by date (newest first)
+  posts.sort((a, b) => new Date(b.date) - new Date(a.date));
 
   return rss({
     title: 'Kang Astro Blog',
