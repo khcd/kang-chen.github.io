@@ -44,15 +44,80 @@ const project = {
 			</p>
 		</div>
 
+		<div class="project-media">
+			<div class="media-section">
+				<h3>Meta Variations</h3>
+				<div class="media-grid">
+					<img src="https://media.hyperbland.com/still/meta-still-1080.jpg" alt="Meta Still" class="clickable-image" />
+					<img src="https://media.hyperbland.com/still/meta-variation.png" alt="Meta Variation" class="clickable-image" />
+					<img src="https://media.hyperbland.com/still/meta-variations1.png" alt="Meta Variations 1" class="clickable-image" />
+					<img src="https://media.hyperbland.com/still/meta-variations2.png" alt="Meta Variations 2" class="clickable-image" />
+					<img src="https://media.hyperbland.com/still/meta-variations3.png" alt="Meta Variations 3" class="clickable-image" />
+					<img src="https://media.hyperbland.com/still/meta-variations4.png" alt="Meta Variations 4" class="clickable-image" />
+					<img src="https://media.hyperbland.com/still/meta-variations5.png" alt="Meta Variations 5" class="clickable-image" />
+					<img src="https://media.hyperbland.com/still/meta-variations6.png" alt="Meta Variations 6" class="clickable-image" />
+				</div>
+			</div>
+
+			<div class="media-section">
+				<h3>Terrain Studies</h3>
+				<div class="media-grid">
+					<img src="https://media.hyperbland.com/still/terrain-1-still.jpg" alt="Terrain Study 1" class="clickable-image" />
+					<img src="https://media.hyperbland.com/still/terrain-2-still.jpg" alt="Terrain Study 2" class="clickable-image" />
+				</div>
+			</div>
+		</div>
+
 		<div class="project-links">
 			<p class="note">Collection includes 19+ discrete experiments spanning 2024.</p>
 		</div>
 	</div>
+
+	<!-- Image Modal -->
+	<div id="imageModal" class="modal">
+		<span class="modal-close">&times;</span>
+		<img class="modal-content" id="modalImage" alt="">
+	</div>
 </Layout>
+
+<script>
+	const modal = document.getElementById('imageModal');
+	const modalImg = document.getElementById('modalImage');
+	const closeBtn = document.querySelector('.modal-close');
+	const clickableImages = document.querySelectorAll('.clickable-image');
+
+	// Open modal when clicking on an image
+	clickableImages.forEach(img => {
+		img.addEventListener('click', function() {
+			modal.style.display = 'flex';
+			modalImg.src = this.src;
+			modalImg.alt = this.alt;
+		});
+	});
+
+	// Close modal when clicking the X
+	closeBtn.addEventListener('click', function() {
+		modal.style.display = 'none';
+	});
+
+	// Close modal when clicking outside the image
+	modal.addEventListener('click', function(e) {
+		if (e.target === modal) {
+			modal.style.display = 'none';
+		}
+	});
+
+	// Close modal with Escape key
+	document.addEventListener('keydown', function(e) {
+		if (e.key === 'Escape' && modal.style.display === 'flex') {
+			modal.style.display = 'none';
+		}
+	});
+</script>
 
 <style>
 	.project-detail {
-		max-width: 700px;
+		max-width: 800px;
 		margin: 0 auto;
 		padding: 3rem 1.5rem;
 	}
@@ -89,5 +154,104 @@ const project = {
 		font-size: 0.9rem;
 		color: var(--secondary-text, #888);
 		font-style: italic;
+	}
+
+	.project-media {
+		margin-top: 3rem;
+	}
+
+	.project-media h2 {
+		font-size: 1.5rem;
+		font-weight: 500;
+		margin-bottom: 2rem;
+		color: var(--text-color);
+	}
+
+	.media-section {
+		margin-bottom: 3rem;
+	}
+
+	.media-section h3 {
+		font-size: 1.1rem;
+		font-weight: 500;
+		margin-bottom: 1rem;
+		color: var(--secondary-text, #666);
+	}
+
+	.media-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 1.5rem;
+		margin-bottom: 2rem;
+	}
+
+	.media-grid img {
+		width: 100%;
+		border-radius: 8px;
+		background-color: #000;
+	}
+
+	.clickable-image {
+		cursor: pointer;
+		transition: opacity 0.2s, transform 0.2s;
+	}
+
+	.clickable-image:hover {
+		opacity: 0.9;
+		transform: scale(1.02);
+	}
+
+	/* Modal styles */
+	.modal {
+		display: none;
+		position: fixed;
+		z-index: 1000;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.95);
+		align-items: center;
+		justify-content: center;
+		padding: 2rem;
+	}
+
+	.modal-content {
+		max-width: 90%;
+		max-height: 90%;
+		object-fit: contain;
+		border-radius: 8px;
+	}
+
+	.modal-close {
+		position: absolute;
+		top: 2rem;
+		right: 3rem;
+		color: #fff;
+		font-size: 3rem;
+		font-weight: 300;
+		cursor: pointer;
+		transition: color 0.2s;
+		line-height: 1;
+	}
+
+	.modal-close:hover {
+		color: #ccc;
+	}
+
+	@media (max-width: 768px) {
+		.media-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.modal-close {
+			top: 1rem;
+			right: 1.5rem;
+			font-size: 2.5rem;
+		}
+
+		.modal {
+			padding: 1rem;
+		}
 	}
 </style>

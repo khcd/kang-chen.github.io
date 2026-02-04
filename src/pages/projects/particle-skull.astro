@@ -43,6 +43,18 @@ const project = {
 			</p>
 		</div>
 
+		<div class="project-media">
+			<div class="media-grid">
+				<img src="https://media.hyperbland.com/moving/particle-skull-2.gif" alt="Particle Skull Animation" />
+				<video controls>
+					<source src="https://media.hyperbland.com/moving/skull-again-and-again.mov_720p.mp4" type="video/mp4">
+				</video>
+				<video controls>
+					<source src="https://media.hyperbland.com/moving/particle-torus.mov_720p.mp4" type="video/mp4">
+				</video>
+			</div>
+		</div>
+
 		<div class="project-links">
 			<p class="note">Documentation includes slow-motion captures and behind-the-scenes footage.</p>
 		</div>
@@ -51,7 +63,7 @@ const project = {
 
 <style>
 	.project-detail {
-		max-width: 700px;
+		max-width: 800px;
 		margin: 0 auto;
 		padding: 3rem 1.5rem;
 	}
@@ -88,5 +100,36 @@ const project = {
 		font-size: 0.9rem;
 		color: var(--secondary-text, #888);
 		font-style: italic;
+	}
+
+	.project-media {
+		margin-top: 3rem;
+	}
+
+	.project-media h2 {
+		font-size: 1.5rem;
+		font-weight: 500;
+		margin-bottom: 2rem;
+		color: var(--text-color);
+	}
+
+	.media-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 1.5rem;
+		margin-bottom: 2rem;
+	}
+
+	.media-grid video,
+	.media-grid img {
+		width: 100%;
+		border-radius: 8px;
+		background-color: #000;
+	}
+
+	@media (max-width: 768px) {
+		.media-grid {
+			grid-template-columns: 1fr;
+		}
 	}
 </style>
