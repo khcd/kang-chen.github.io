@@ -5,19 +5,13 @@ import BlogPost from "../../components/BlogPost.astro"
 // getStaticPaths tells Astro which slugs to generate
 export async function getStaticPaths() {
 	const posts = await Astro.glob("../../content/posts/*.md")
-	console.log("Found posts:", posts.length)
-	console.log(
-		"Post file paths:",
-		posts.map((p) => p.file)
-	)
-
 	const paths = posts.map((post) => {
 		// Extract filename from file path and remove .md extension
 		const filename = post.file.split("/").pop().replace(/\.md$/, "")
-		console.log(`File path: ${post.file}, Generated slug: ${filename}`)
+	
 		return { params: { slug: filename } }
 	})
-	console.log("Generated blog slugs:", paths)
+	
 	return paths
 }
 
