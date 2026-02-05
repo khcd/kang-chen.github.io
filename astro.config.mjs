@@ -2,7 +2,7 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'kang.fyi',
+  site: 'https://kang.fyi',
   base: '/',
   outDir: './dist',
   publicDir: './public',
