@@ -2,143 +2,103 @@
 // src/pages/index.astro
 import Layout from "../layouts/Layout.astro"
 
-// Projects data
-const projects = [
+const posts = [
 	{
-		title: "Project One",
+		title: "Running LLMs on Old Hardware",
+		description: "Running LLMs on old hardware with AMD GPUs",
+		slug: "old-hardware",
+		date: "2026-01-21",
+		year: 2026,
+	},
+	{
+		title: "Jung on the Puer Aeternus",
+		description:
+			"An exploration of the Puer aeternus complex in modern society",
+		slug: "puer-aeternus",
+		date: "2025-03-26",
+		year: 2025,
+	},
+	{
+		title: "Dot Your I's and Cross Your T's",
+		description:
+			"A reflection on thoroughness and confronting difficult situations",
+		slug: "dot-your-is",
+		date: "2024-12-30",
 		year: 2024,
-		image: "https://picsum.photos/id/1/400/400",
-		slug: "project-one",
 	},
 	{
-		title: "Project Two",
+		title: "Tools are an Arbitrage",
+		description:
+			"An analysis of how tools and platforms create arbitrage opportunities in creative industries",
+		slug: "tools-as-arbitrage",
+		date: "2024-01-29",
 		year: 2024,
-		image: "https://picsum.photos/id/2/400/400",
-		slug: "project-two",
 	},
-	{
-		title: "Project Three",
-		year: 2023,
-		image: "https://picsum.photos/id/3/400/400",
-		slug: "project-three",
-	},
-	{
-		title: "Project Four",
-		year: 2023,
-		image: "https://picsum.photos/id/4/400/400",
-		slug: "project-four",
-	},
-	{
-		title: "Project Five",
-		year: 2022,
-		image: "https://picsum.photos/id/5/400/400",
-		slug: "project-five",
-	},
-	{
-		title: "Project Six",
-		year: 2022,
-		image: "https://picsum.photos/id/6/400/400",
-		slug: "project-six",
-	},
-	{
-		title: "Project Seven",
-		year: 2022,
-		image: "https://picsum.photos/id/7/400/400",
-		slug: "project-seven",
-	},
-	{
-		title: "Project Eight",
-		year: 2022,
-		image: "https://picsum.photos/id/8/400/400",
-		slug: "project-eight",
-	},
-]
-
-// Blog posts data
-const blogPosts = [
 	{
 		title: "Psychology of the Independent Creator",
-		pubDate: new Date("2023-06-28"),
 		description:
 			"Exploring how ideologies shape identity and the importance of maintaining youthful ideals in creative work",
 		slug: "psych-of-independent-creator",
+		date: "2023-07-25",
+		year: 2023,
 	},
 	{
 		title: "The Power of Youthful Ideologies",
-		pubDate: new Date("2023-06-28"),
 		description:
 			"A reflection on how maintaining youthful ideals can shape our identity and creative journey",
 		slug: "youthful-ideologies",
+		date: "2023-06-28",
+		year: 2023,
 	},
 ]
+
+// Group posts by year
+const postsByYear = posts.reduce((acc, post) => {
+	;(acc[post.year] = acc[post.year] || []).push(post)
+	return acc
+}, {})
+
+// Sort years in descending order
+const years = Object.keys(postsByYear).sort((a, b) => Number(b) - Number(a))
 ---
 
 <Layout>
-	<section class="bio-section">
-		<p>
-			A software engineer with a passion for both the fine details and the
-			big picture. Experienced in designing elegant UI elements for
-			platforms like Airtasker—such as task bars—and developing advanced
-			AI integrations in Java. Always exploring new ways to blend design
-			and engineering for impactful web experiences.
-		</p>
-	</section>
-	<div class="projects-grid">
+	<div class="bio-section">
+		<p>Bio fill in</p>
+	</div>
+	<div class="blog-index">
 		{
-			projects.map((project) => (
-				<a href={`/projects/${project.slug}`} class="project-card">
-					<img src={project.image} alt={project.title} />
-					<h2 class="project-title">{project.title}</h2>
-					<span class="project-year">{project.year}</span>
-				</a>
+			years.map((year) => (
+				<section class="year-section">
+					<h2>{year}</h2>
+					<div class="posts-list">
+						{postsByYear[year].map((post) => (
+							<a href={`/blog/${post.slug}`} class="post-link">
+								<article class="post-card">
+									<h3>{post.title}</h3>
+									<p class="description">
+										{post.description}
+									</p>
+									<time datetime={post.date}>
+										{new Date(post.date).toLocaleDateString(
+											"en-US",
+											{
+												month: "long",
+												day: "numeric",
+											},
+										)}
+									</time>
+								</article>
+							</a>
+						))}
+					</div>
+				</section>
 			))
 		}
 	</div>
-
-	<section class="blog-posts">
-		<h2>Latest Blog Posts</h2>
-		<div class="blog-grid">
-			{
-				blogPosts.map((post) => (
-					<a href={`/blog/${post.slug}`} class="blog-card">
-						<h3>{post.title}</h3>
-						<p>{post.description}</p>
-						<time datetime={post.pubDate.toISOString()}>
-							{post.pubDate.toLocaleDateString("en-US", {
-								year: "numeric",
-								month: "long",
-								day: "numeric",
-							})}
-						</time>
-					</a>
-				))
-			}
-		</div>
-	</section>
 </Layout>
 
 <style>
-	.bio-section {
-		margin: 3rem 0 4rem 0;
-		padding: 2rem 1.5rem;
-		background: #181818;
-		border-radius: 10px;
-		color: #f3f3f3;
-		text-align: left;
-		max-width: 700px;
-		width: 100%;
-		box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-	}
-	.bio-section h1 {
-		font-size: 2rem;
-		margin-bottom: 1rem;
-		font-weight: 600;
-	}
-	.bio-section p {
-		font-size: 1.2rem;
-		margin-bottom: 1.2rem;
-		line-height: 1.6;
-	}
 	.bio-links {
 		font-size: 1rem;
 		margin-top: 0.5rem;
@@ -156,88 +116,110 @@ const blogPosts = [
 		color: #888;
 		margin: 0 0.3rem;
 	}
-	.projects-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-		gap: 2rem;
-		margin-bottom: 4rem;
+
+	.bio-section {
+		max-width: 800px;
+		margin: 0 auto;
+		padding: 2rem 1rem 0;
 	}
 
-	.project-card {
-		position: relative;
-		overflow: hidden;
-		border-radius: 8px;
-	}
-
-	.project-card:hover {
-		transform: translateY(-5px);
-	}
-
-	.project-card img {
-		width: 100%;
-		height: auto;
-		display: block;
-	}
-
-	.project-title {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		padding: 1rem;
-		background: rgba(0, 0, 0, 0.7);
-		color: white;
+	.bio-section p {
 		margin: 0;
 	}
 
-	.project-year {
-		position: absolute;
-		top: 1rem;
-		right: 1rem;
-		background: rgba(0, 0, 0, 0.7);
-		color: white;
-		padding: 0.5rem;
-		border-radius: 4px;
+	.blog-index {
+		max-width: 800px;
+		margin: 0 auto;
+		padding: 2rem 1rem;
 	}
 
-	.blog-posts {
-		padding: 2rem 0;
+	.year-section {
+		margin-bottom: 4rem;
 	}
 
-	.blog-posts h2 {
-		margin-bottom: 2rem;
+	.year-section h2 {
+		font-size: 1.5rem;
+		font-weight: 500;
+		margin-bottom: 1.5rem;
+		color: var(--text-color);
 	}
 
-	.blog-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-		gap: 2rem;
+	.posts-list {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
 	}
 
-	.blog-card {
-		padding: 1.5rem;
-		border: 1px solid #eee;
-		border-radius: 8px;
+	.post-link {
 		text-decoration: none;
-		color: inherit;
+		color: var(--text-color);
 	}
 
-	.blog-card:hover {
-		transform: translateY(-5px);
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	.post-card {
+		padding: 1.5rem;
+		border-radius: 8px;
+		background-color: var(--background-color);
+		border: 1px solid var(--border-color, transparent);
 	}
 
-	.blog-card h3 {
-		margin: 0 0 1rem 0;
+	.post-card:hover {
+		background-color: var(--card-hover, #f5f5f5);
 	}
 
-	.blog-card p {
-		margin: 0 0 1rem 0;
-		color: #666;
+	.post-card h3 {
+		font-size: 1.25rem;
+		font-weight: 500;
+		margin: 0;
+		margin-bottom: 0.5rem;
+		color: var(--text-color);
 	}
 
-	.blog-card time {
-		color: #888;
-		font-size: 0.9rem;
+	.description {
+		font-size: 1rem;
+		color: var(--secondary-text, #666);
+		margin: 0;
+		margin-bottom: 0.5rem;
+	}
+
+	time {
+		font-size: 0.875rem;
+		color: var(--secondary-text, #888);
+	}
+
+	.projects-section {
+		max-width: 800px;
+		margin: 0 auto 3rem;
+		padding: 0 1rem;
+	}
+
+	.projects-blurb {
+		padding: 2rem;
+		border-radius: 8px;
+		background-color: var(--card-background, #fafafa);
+		border: 1px solid var(--border-color, #e0e0e0);
+	}
+
+	.projects-blurb h2 {
+		font-size: 1.5rem;
+		font-weight: 500;
+		margin: 0 0 0.75rem;
+		color: var(--text-color);
+	}
+
+	.projects-blurb p {
+		font-size: 1rem;
+		color: var(--secondary-text, #666);
+		margin: 0 0 1rem;
+		line-height: 1.6;
+	}
+
+	.view-projects {
+		font-size: 0.95rem;
+		color: var(--link-color, #4ea1f7);
+		text-decoration: none;
+	}
+
+	.view-projects:hover {
+		text-decoration: underline;
 	}
 </style>

@@ -1,0 +1,161 @@
+---
+// src/pages/projects/index.astro
+import Layout from "../../layouts/Layout.astro"
+
+const projects = [
+	{
+		title: "X86",
+		year: 2024,
+		slug: "x86-mono-game",
+		description:
+			"A top-down shooter built with C# and MonoGame. Procedurally generated spacecraft, dynamic enemy AI, and boss battles.",
+	},
+	{
+		title: "Processing Sketches",
+		year: 2024,
+		slug: "processing-sketches",
+		description:
+			"Generative art experiments in Processing—colour bar animations, network density visualizations, and interpolation studies.",
+	},
+	{
+		title: "Hyperbland",
+		year: 2022,
+		slug: "hyperbland",
+		description:
+			"WebGL experiments testing the limits of real-time computational geometry rendering. Torus rotations, NURBS surfaces, and accidental visual discoveries.",
+	},
+	{
+		title: "Particle Skull",
+		year: 2016,
+		slug: "particle-skull",
+		description:
+			"Large-scale projection for Beams Festival, City of Sydney. A 3D skull dissolving into particles, responsive to audio.",
+	},
+	{
+		title: "Sketch Export Generator",
+		year: 2015,
+		slug: "sketch-export-generator",
+		description:
+			"Sketch plugin for simultaneous iOS and Android exports. One shortcut to generate all asset sizes.",
+	},
+]
+
+// Group projects by year
+const projectsByYear = projects.reduce((acc, project) => {
+	;(acc[project.year] = acc[project.year] || []).push(project)
+	return acc
+}, {})
+
+// Sort years in descending order
+const years = Object.keys(projectsByYear).sort((a, b) => Number(b) - Number(a))
+---
+
+<Layout>
+	<div class="projects-index">
+		<h1>Projects</h1>
+		<p class="intro">
+			A selection of creative and technical work spanning games, generative art, installations, and developer tools.
+
+			I'm also currently in the process of migrating images to a CDN so I can update these projects with images.
+		</p>
+		{
+			years.map((year) => (
+				<section class="year-section">
+					<h2>{year}</h2>
+					<div class="projects-list">
+						{projectsByYear[year].map((project) => (
+							<a
+								href={`/projects/${project.slug}`}
+								class="project-link"
+							>
+								<article class="project-card">
+									<div class="project-content">
+										<h3>{project.title}</h3>
+										<p class="description">
+											{project.description}
+										</p>
+									</div>
+								</article>
+							</a>
+						))}
+					</div>
+				</section>
+			))
+		}
+	</div>
+</Layout>
+
+<style>
+	.projects-index {
+		max-width: 800px;
+		margin: 0 auto;
+		padding: 2rem 1rem;
+	}
+
+	h1 {
+		font-size: 2rem;
+		font-weight: 500;
+		margin-bottom: 0.5rem;
+		color: var(--text-color);
+	}
+
+	.intro {
+		font-size: 1rem;
+		color: var(--secondary-text, #666);
+		margin-bottom: 2.5rem;
+		line-height: 1.6;
+	}
+
+	.year-section {
+		margin-bottom: 3rem;
+	}
+
+	.year-section h2 {
+		font-size: 1.25rem;
+		font-weight: 500;
+		margin-bottom: 1rem;
+		color: var(--secondary-text, #888);
+	}
+
+	.projects-list {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.project-link {
+		text-decoration: none;
+		color: var(--text-color);
+	}
+
+	.project-card {
+		padding: 1.5rem;
+		border-radius: 8px;
+		background-color: var(--background-color);
+		border: 1px solid var(--border-color, transparent);
+		transition:
+			transform 0.2s,
+			box-shadow 0.2s;
+	}
+
+	.project-card:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+		background-color: var(--card-hover, #f5f5f5);
+	}
+
+	.project-card h3 {
+		font-size: 1.25rem;
+		font-weight: 500;
+		margin: 0;
+		margin-bottom: 0.5rem;
+		color: var(--text-color);
+	}
+
+	.description {
+		font-size: 1rem;
+		color: var(--secondary-text, #666);
+		margin: 0;
+		line-height: 1.5;
+	}
+</style>

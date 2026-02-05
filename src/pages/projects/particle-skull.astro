@@ -1,0 +1,135 @@
+---
+// src/pages/projects/particle-skull.astro
+import Layout from "../../layouts/Layout.astro"
+
+const project = {
+	title: "Particle Skull",
+	year: 2016,
+	tags: ["Installation", "Three.js", "Beams Festival"],
+}
+---
+
+<Layout>
+	<div class="project-detail">
+		<h1>{project.title}</h1>
+		<p class="project-meta">{project.year} · {project.tags.join(" · ")}</p>
+
+		<div class="project-content">
+			<p>
+				Particle Skull was created for Beams Festival in the City of Sydney—a
+				large-scale projection mapped onto a building facade in the heart of the city.
+			</p>
+
+			<p>
+				The concept was straightforward: take a 3D skull model, dissolve it into
+				thousands of particles, and let them drift and reform in response to audio
+				input. The execution was anything but straightforward. Projecting onto
+				architecture at night, with ambient light pollution, unpredictable weather,
+				and the pressure of a live festival audience, taught me that technical
+				demos and real-world installations live in different universes.
+			</p>
+
+			<p>
+				The skull motif was deliberate—memento mori for the algorithmic age. As
+				particles scattered and reconverged, the skull would emerge and dissolve,
+				a reminder of impermanence rendered in vertices and shaders.
+			</p>
+
+			<p>
+				Working with the festival team and seeing crowds gather around the
+				projection remains one of my favourite creative experiences. There's
+				something irreplaceable about watching strangers stop in the street to
+				look at something you made.
+			</p>
+		</div>
+
+		<div class="project-media">
+			<div class="media-grid">
+				<img src="https://media.hyperbland.com/moving/particle-skull-2.gif" alt="Particle Skull Animation" />
+				<video controls>
+					<source src="https://media.hyperbland.com/moving/skull-again-and-again.mov_720p.mp4" type="video/mp4">
+				</video>
+				<video controls>
+					<source src="https://media.hyperbland.com/moving/particle-torus.mov_720p.mp4" type="video/mp4">
+				</video>
+			</div>
+		</div>
+
+		<div class="project-links">
+			<p class="note">Documentation includes slow-motion captures and behind-the-scenes footage.</p>
+		</div>
+	</div>
+</Layout>
+
+<style>
+	.project-detail {
+		max-width: 800px;
+		margin: 0 auto;
+		padding: 3rem 1.5rem;
+	}
+
+	h1 {
+		font-size: 2rem;
+		font-weight: 500;
+		margin-bottom: 0.5rem;
+		color: var(--text-color);
+	}
+
+	.project-meta {
+		font-size: 0.9rem;
+		color: var(--secondary-text, #666);
+		margin-bottom: 2.5rem;
+	}
+
+	.project-content {
+		line-height: 1.8;
+		color: var(--text-color);
+	}
+
+	.project-content p {
+		margin-bottom: 1.5rem;
+	}
+
+	.project-links {
+		margin-top: 2rem;
+		padding-top: 1.5rem;
+		border-top: 1px solid var(--border-color, #e0e0e0);
+	}
+
+	.note {
+		font-size: 0.9rem;
+		color: var(--secondary-text, #888);
+		font-style: italic;
+	}
+
+	.project-media {
+		margin-top: 3rem;
+	}
+
+	.project-media h2 {
+		font-size: 1.5rem;
+		font-weight: 500;
+		margin-bottom: 2rem;
+		color: var(--text-color);
+	}
+
+	.media-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 1.5rem;
+		margin-bottom: 2rem;
+	}
+
+	.media-grid video,
+	.media-grid img {
+		width: 100%;
+		border-radius: 8px;
+		background-color: #000;
+	}
+
+	@media (max-width: 768px) {
+		.media-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

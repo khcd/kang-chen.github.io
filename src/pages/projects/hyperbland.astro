@@ -1,0 +1,189 @@
+---
+// src/pages/projects/hyperbland.astro
+import Layout from "../../layouts/Layout.astro"
+
+const project = {
+	title: "Hyperbland",
+	year: 2022,
+	tags: ["WebGL", "Three.js", "Computational Geometry"],
+}
+---
+
+<Layout>
+	<div class="project-detail">
+		<h1><a href="https://hyperbland.com/" target="_blank">{project.title}</a></h1>
+		<p class="project-meta">{project.year} · {project.tags.join(" · ")}</p>
+
+		<div class="project-content">
+			<p>
+				Hyperbland began as an investigation into the limits of real-time rendering.
+				The question was simple: how fast can we push computational geometry through
+				WebGL before the browser gives up?
+			</p>
+
+			<p>
+				Built on a modern Three.js boilerplate, the project became a playground for
+				testing torus rotations, NURBS surfaces, and parametric line structures at
+				various resolutions. What started as performance benchmarks evolved into
+				something more interesting—accidental visual discoveries that emerged from
+				pushing parameters beyond their intended ranges.
+			</p>
+
+			<p>
+				The "yarn accidents" and "infinite jitter" variations weren't planned. They
+				came from misconfigurations that produced unexpectedly beautiful results:
+				strobing geometries, bloom structures cascading into themselves, and forms
+				that seemed to breathe at the edge of frame-rate collapse.
+			</p>
+
+			<p>
+				This project reinforced something I've come to believe: the most interesting
+				creative work often happens at the boundary between control and chaos, where
+				systems start to behave in ways their creators didn't anticipate.
+			</p>
+		</div>
+
+		<div class="project-media">
+			<h2>Gallery</h2>
+
+			<div class="media-section">
+				<h3>Torus Rotation Experiments</h3>
+				<div class="media-grid">
+					<video controls>
+						<source src="https://media.hyperbland.com/moving/torus-rotation-jiggle-2-1080P-day-3.mov_720p.mp4" type="video/mp4">
+					</video>
+					<video controls>
+						<source src="https://media.hyperbland.com/moving/torus-rotation-yarn-accident-1-day-3-trimmed-720.mov_720p.mp4" type="video/mp4">
+					</video>
+					<video controls>
+						<source src="https://media.hyperbland.com/moving/torus-rotation-yarn-accident-4-1080P-day-3.mov_720p.mp4" type="video/mp4">
+					</video>
+					<video controls>
+						<source src="https://media.hyperbland.com/moving/torus-rotation-yarn-accident-5-speed-1080P-day-3.mov_720p.mp4" type="video/mp4">
+					</video>
+				</div>
+			</div>
+
+			<div class="media-section">
+				<h3>Infinite Jitter Series</h3>
+				<div class="media-grid">
+					<video controls>
+						<source src="https://media.hyperbland.com/moving/infinite-jitter-trim-720p.mov_720p.mp4" type="video/mp4">
+					</video>
+					<video controls>
+						<source src="https://media.hyperbland.com/moving/infinite-jitter-720p.mov_720p.mp4" type="video/mp4">
+					</video>
+				</div>
+			</div>
+
+			<div class="media-section">
+				<h3>Line Studies</h3>
+				<div class="media-grid">
+					<video controls>
+						<source src="https://media.hyperbland.com/moving/lines1-1080P.mov_720p.mp4" type="video/mp4">
+					</video>
+					<video controls>
+						<source src="https://media.hyperbland.com/moving/lines2-array-bloom-structure-1080p.mov_720p.mp4" type="video/mp4">
+					</video>
+					<video controls>
+						<source src="https://media.hyperbland.com/moving/joylines-space-1080p.mov_720p.mp4" type="video/mp4">
+					</video>
+				</div>
+			</div>
+
+			<div class="media-section">
+				<h3>NURBS & Deformations</h3>
+				<div class="media-grid">
+					<video controls>
+						<source src="https://media.hyperbland.com/moving/nurb-mass-trimmed-1080p.mov_720p.mp4" type="video/mp4">
+					</video>
+				</div>
+			</div>
+		<div class="project-links">
+			<p class="note">Media archive includes 4K renders and experimental variations.</p>
+		</div>
+	</div>
+</Layout>
+
+<style>
+	.project-detail {
+		max-width: 780px;
+		margin: 0 auto;
+		padding: 3rem 1.5rem;
+	}
+
+	h1 {
+		font-size: 2rem;
+		font-weight: 500;
+		margin-bottom: 0.5rem;
+		color: var(--text-color);
+	}
+
+	.project-meta {
+		font-size: 0.9rem;
+		color: var(--secondary-text, #666);
+		margin-bottom: 2.5rem;
+	}
+
+	.project-content {
+		line-height: 1.8;
+		color: var(--text-color);
+	}
+
+	.project-content p {
+		margin-bottom: 1.5rem;
+	}
+
+	.project-links {
+		margin-top: 2rem;
+		padding-top: 1.5rem;
+		border-top: 1px solid var(--border-color, #e0e0e0);
+	}
+
+	.note {
+		font-size: 0.9rem;
+		color: var(--secondary-text, #888);
+		font-style: italic;
+	}
+
+	.project-media {
+		margin-top: 3rem;
+	}
+
+	.project-media h2 {
+		font-size: 1.5rem;
+		font-weight: 500;
+		margin-bottom: 2rem;
+		color: var(--text-color);
+	}
+
+	.media-section {
+		margin-bottom: 3rem;
+	}
+
+	.media-section h3 {
+		font-size: 1.1rem;
+		font-weight: 500;
+		margin-bottom: 1rem;
+		color: var(--secondary-text, #666);
+	}
+
+	.media-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 1.5rem;
+		margin-bottom: 2rem;
+	}
+
+	.media-grid video {
+		width: 100%;
+		border-radius: 8px;
+		background-color: #000;
+	}
+
+	@media (max-width: 768px) {
+		.media-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
